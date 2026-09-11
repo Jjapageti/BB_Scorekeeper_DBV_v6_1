@@ -128,16 +128,31 @@ function render(){
 function refreshIfChanged(){const raw=localStorage.getItem(STORAGE_KEY);if(raw!==lastRaw){lastRaw=raw;render();}}
 window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){lastRaw=e.newValue;render();}});
 lastRaw=localStorage.getItem(STORAGE_KEY);render();setInterval(refreshIfChanged,750);
-window.BBFirebaseSync?.subscribe(remoteState=>{
-  const next=JSON.stringify(remoteState);
-  if(next===lastRaw)return;
-  localStorage.setItem(STORAGE_KEY,next);
-  lastRaw=next;
-  render();
-});
+let stopRemoteSubscription=null;
+function subscribeRemoteState(){
+  if(stopRemoteSubscription)return;
+  stopRemoteSubscription=window.BBFirebaseSync?.subscribe(remoteState=>{
+    const next=JSON.stringify(remoteState);
+    if(next===lastRaw)return;
+    localStorage.setItem(STORAGE_KEY,next);
+    lastRaw=next;
+    render();
+  })||null;
+}
 window.BBFirebaseSync?.watchPresence(presence=>{
   const connection=$('#connectionState');
   if(!connection)return;
   connection.textContent=presence.online?'SCORER ONLINE':'SCORER OFFLINE · SPIEL NICHT BEENDET';
+});
+window.BBFirebaseSync?.startViewerPresence(70, allowed=>{
+  const status=$('#liveGameStatus');
+  if(allowed){
+    subscribeRemoteState();
+    if(status.textContent==='LIVE-ZUSCHAUERLIMIT ERREICHT · BITTE SPÄTER ERNEUT VERSUCHEN.')status.hidden=true;
+    return;
+  }
+  if(stopRemoteSubscription){stopRemoteSubscription();stopRemoteSubscription=null;}
+  status.hidden=false;
+  status.textContent='LIVE-ZUSCHAUERLIMIT ERREICHT · BITTE SPÄTER ERNEUT VERSUCHEN.';
 });
 })();

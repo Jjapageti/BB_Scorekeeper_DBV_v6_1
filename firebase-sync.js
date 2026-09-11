@@ -11,10 +11,13 @@
     appId: '1:1091864539244:web:f186824e28d3d4f4e26849',
     measurementId: 'G-F4L24VR2CP'
   };
-  const statePath = 'games/default/state';
+  const requestedGameId = new URLSearchParams(window.location.search).get('game') || 'default';
+  const gameId = requestedGameId.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 48) || 'default';
+  const statePath = `games/${gameId}/state`;
   const app = firebase.initializeApp(firebaseConfig);
   const stateRef = app.database().ref(statePath);
-  const presenceRef = app.database().ref('games/default/presence/scorer');
+  const presenceRef = app.database().ref(`games/${gameId}/presence/scorer`);
+  const viewersRef = app.database().ref(`games/${gameId}/presence/viewers`);
   const encodeKey = key => key.replace(/[.#$\/\[\]]/g, char => `_fb${char.charCodeAt(0).toString(16)}_`);
   const decodeKey = key => key.replace(/_fb([0-9a-f]+)_/g, (_, code) => String.fromCharCode(parseInt(code, 16)));
   const encodeValue = value => {
@@ -61,6 +64,30 @@
         }).then(() => presenceRef.set({
           online: true,
           lastSeen: firebase.database.ServerValue.TIMESTAMP
+        }));
+      });
+    },
+    startViewerPresence(maxViewers, onAccessChanged) {
+      const viewerRef = viewersRef.push();
+      const connectedRef = app.database().ref('.info/connected');
+      let registered = false;
+      const checkAccess = snapshot => {
+        const viewers = snapshot.val() || {};
+        const allowed = registered && Object.keys(viewers).length <= maxViewers;
+        if (!allowed && registered) {
+          viewerRef.remove();
+          registered = false;
+        }
+        onAccessChanged(allowed);
+      };
+      viewersRef.on('value', checkAccess);
+      connectedRef.on('value', snapshot => {
+        if (snapshot.val() !== true || registered) return;
+        viewerRef.onDisconnect().remove().then(() => viewerRef.set({
+          connectedAt: firebase.database.ServerValue.TIMESTAMP
+        }).then(() => {
+          registered = true;
+          viewersRef.once('value').then(checkAccess);
         }));
       });
     }
