@@ -1,0 +1,18 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+assert.match(index,/id="openLiveBtn"/,'scorekeeper exposes a Live button');
+for(const file of ['live.html','live.js','live.css']) assert.ok(fs.existsSync(path.join(root,file)),`${file} exists`);
+const live=fs.readFileSync(path.join(root,'live.html'),'utf8');
+assert.match(live,/id="liveInning"/);
+assert.match(live,/id="liveOuts"/);
+assert.match(live,/id="base1"/);
+assert.match(live,/id="base2"/);
+assert.match(live,/id="base3"/);
+assert.match(live,/id="playByPlay"/);
+const js=fs.readFileSync(path.join(root,'live.js'),'utf8');
+assert.match(js,/buildLiveSnapshot/);
+assert.match(js,/storage/,'live view listens for storage updates');
+console.log('live UI tests passed');

@@ -1,0 +1,14 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const js=fs.readFileSync(path.join(root,'app.js'),'utf8');
+assert.match(html,/id="inningInput"/,'entry dialog has explicit inning input');
+assert.match(html,/id="playerSelect"/,'entry dialog can choose which player took the PA');
+assert.match(html,/id="addPitcherBtn"/,'pitcher section can add unlimited rows');
+assert.match(html,/core\.js/,'browser loads shared core model');
+assert.match(js,/ScorekeeperCore\.addPlayer/,'UI supports adding player rows dynamically');
+assert.match(js,/ScorekeeperCore\.addPitcher/,'UI supports adding pitcher rows dynamically');
+assert.match(js,/plateAppearances/,'score cells are PA-based rather than inning-based');
+console.log('ui structure tests passed');

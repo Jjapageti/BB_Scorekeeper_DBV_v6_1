@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BB Live Game</title>
+  <link rel="stylesheet" href="live.css?v=naver-field-17" />
+</head>
+<body>
+  <main class="live-shell">
+    <header class="live-head">
+      <div class="brand"><span class="live-dot"></span><strong>BB LIVE</strong></div>
+      <div class="head-right"><span id="connectionState">LOKAL LIVE</span><span id="lastUpdated">--:--:--</span><a href="index.html">Scorer</a></div>
+    </header>
+    <div id="liveGameStatus" class="live-warning" hidden></div>
+
+    <section class="score-hero">
+      <div class="team guest-team">      <span class="team-label">GAST</span><strong id="guestName">Gast</strong><span id="guestRuns" class="score">0</span></div>
+      <div class="game-center">
+        <span id="liveHalf" class="half">TOP</span>
+        <strong id="liveInning" class="inning">1. Inning TOP</strong>
+        <span class="inning-word">INNING</span>
+        <div id="liveOuts" class="outs" aria-label="outs"><span></span><span></span><span></span></div>
+      </div>
+      <div class="team home-team">      <span class="team-label">HEIM</span><strong id="homeName">Heim</strong><span id="homeRuns" class="score">0</span></div>
+    </section>
+
+    <section class="line-card card">
+      <div class="card-title">LINE SCORE</div>
+      <div class="line-scroll"><table id="liveLineScore"><thead></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="live-grid">
+      <div class="field-card card">
+        <div class="card-title">BASES</div>
+        <div class="field naver-field">
+          <svg class="field-dirt" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M50 86 L7 45 C13 27 31 16 50 16 C69 16 87 27 93 45 Z" />
+          </svg>
+          <div class="field-infield-grass" aria-hidden="true"></div>
+          <svg class="basepaths" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 36 L24 61 L50 86 L76 61 L100 36" />
+          </svg>
+          <svg class="field-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="field-foul-line" d="M50 88 L0 36" />
+            <path class="field-foul-line" d="M50 88 L100 36" />
+          </svg>
+          <div class="base-dirt base-dirt-3" aria-hidden="true"></div>
+          <div class="base-dirt base-dirt-1" aria-hidden="true"></div>
+          <div id="base2" class="base base-2"><span>2B</span><strong>-</strong></div>
+          <div id="base3" class="base base-3"><span>3B</span><strong>-</strong></div>
+          <div id="base1" class="base base-1"><span>1B</span><strong>-</strong></div>
+          <div id="fieldDefense" class="field-defense" aria-label="Defensive positions"></div>
+          <div class="pitcher-mound" aria-hidden="true"></div>
+          <div class="home-dirt" aria-hidden="true"></div>
+          <div class="home-plate"></div>
+          <div class="field-count" aria-label="Count">
+            <div class="count-row count-balls"><b>B</b><i></i><i></i><i></i></div>
+            <div class="count-row count-strikes"><b>S</b><i></i><i></i></div>
+            <div class="count-row count-outs"><b>O</b><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="batter-panel">
+          <span>SCHLAGMANN</span>
+          <strong id="liveBatter">1</strong>
+          <div class="live-count" aria-label="Count">
+            <span>B <b id="liveBalls">0</b></span>
+            <span>S <b id="liveStrikes">0</b></span>
+            <span>O <b id="liveOutCount">0</b></span>
+            <span id="liveDirection"></span>
+          </div>
+          <div id="livePitches" class="live-pitches">No pitches recorded.</div>
+        </div>
+          <div class="defense-panel">
+            <div class="card-title">DEFENSE</div>
+            <div id="liveDefense" class="defense-list"><span class="defense-empty">No defensive lineup recorded.</span></div>
+          </div>
+          <div id="liveWarning" class="live-warning" hidden></div>
+      </div>
+
+      <section class="inning-card card">
+          <div class="card-title-row">
+            <div class="card-title">INNING-INFORMATION</div>
+            <span id="selectedInningLabel">AKTUELLES INNING</span>
+          </div>
+          <div id="inningSelector" class="inning-selector" role="tablist" aria-label="Inning-Auswahl"></div>
+      </section>
+
+      <div class="plays-card card">
+        <div class="card-title-row relay-title"><div class="card-title">SPIELZUG FÜR SPIELZUG</div><span>Alle Ereignisse</span></div>
+        <div id="playByPlay" class="plays"><div class="empty-play">Noch keine Spielzüge erfasst.</div></div>
+      </div>
+    </section>
+
+    <div class="prototype-note">Lokaler Prototyp · Aktualisierung im gleichen Browser/localhost wie der Scorer.</div>
+  </main>
+
+  <script src="core.js?v=6.1.54"></script>
+  <script src="live.js?v=6.1.65"></script>
+</body>
+</html>

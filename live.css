@@ -1,0 +1,396 @@
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#081019;color:#f8fafc}body{background:radial-gradient(circle at 50% -20%,#1e3a4b 0,#0b1822 36%,#070d13 72%)}.live-shell{width:min(1120px,100%);margin:0 auto;padding:18px 18px 36px}.live-head{display:flex;justify-content:space-between;align-items:center;padding:4px 2px 18px;border-bottom:1px solid #29404e}.brand{display:flex;gap:9px;align-items:center;font-size:19px;letter-spacing:.08em}.live-dot{width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 16px #ef4444}.head-right{display:flex;gap:14px;align-items:center;color:#91a5b1;font-size:12px}.head-right a{color:#d9e7ee;text-decoration:none;border:1px solid #37505f;border-radius:7px;padding:6px 9px}.score-hero{display:grid;grid-template-columns:minmax(0,1fr) 190px minmax(0,1fr);align-items:center;gap:20px;padding:30px 0}.team{display:grid;gap:4px;min-width:0}.guest-team{text-align:right}.home-team{text-align:left}.team-label{font-size:11px;color:#8095a2;letter-spacing:.14em}.team strong{font-size:clamp(20px,4vw,38px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.score{font-size:clamp(46px,8vw,82px);font-weight:900;line-height:.95}.game-center{text-align:center;display:grid;place-items:center;min-width:0}.half{font-size:12px;font-weight:800;color:#5eead4;letter-spacing:.15em}.inning{font-size:clamp(28px,4vw,48px);line-height:1;white-space:nowrap}.inning-word{font-size:10px;color:#8fa2ad;letter-spacing:.16em}.outs{display:flex;gap:7px;margin-top:12px}.outs span{width:12px;height:12px;border-radius:50%;border:2px solid #879aa5;background:transparent}.outs span.on{background:#fbbf24;border-color:#fbbf24;box-shadow:0 0 8px rgba(251,191,36,.5)}.live-grid{display:grid;grid-template-columns:minmax(330px,.9fr) minmax(360px,1.1fr);gap:14px}.card{border:1px solid #253a47;background:rgba(10,24,34,.88);border-radius:14px;box-shadow:0 10px 32px rgba(0,0,0,.2)}.card-title{font-size:11px;letter-spacing:.16em;font-weight:800;color:#8099a7}.field-card{padding:18px}.field{width:300px;height:250px;max-width:100%;margin:8px auto 0;position:relative}.field:before{content:"";position:absolute;width:158px;height:158px;border:1px solid #3c5665;transform:rotate(45deg);left:70px;top:45px;background:linear-gradient(135deg,rgba(27,66,51,.15),rgba(34,82,64,.25))}.base{position:absolute;z-index:2;width:120px;text-align:center}.base span{display:block;font-size:10px;color:#778f9d}.base strong{display:inline-block;margin-top:4px;max-width:116px;padding:5px 7px;border:1px solid #36505f;border-radius:6px;color:#a7bbc6;background:#0c1c26;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.base.occupied strong{color:#07130f;background:#5eead4;border-color:#5eead4;font-weight:900}.base-2{top:3px;left:105px}.base-3{top:104px;left:3px}.base-1{top:104px;right:3px}.home-plate{position:absolute;z-index:2;bottom:1px;left:139px;width:22px;height:18px;background:#e5eef3;clip-path:polygon(0 0,100% 0,82% 70%,50% 100%,18% 70%)}.batter-panel{border-top:1px solid #263f4c;padding-top:14px;display:grid;gap:4px}.live-count{display:flex;gap:12px;color:#9db2bd;font-size:12px}.live-count b{color:#fbbf24;font-size:16px}.live-count span:last-child{color:#5eead4}.batter-panel span{font-size:10px;color:#7f95a2;letter-spacing:.15em}.batter-panel strong{font-size:22px}.live-warning{margin-top:12px;padding:8px 10px;border-radius:7px;background:#4c1d1d;color:#fecaca;font-size:12px}.plays-card{padding:18px}.card-title-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.card-title-row>span{font-size:11px;color:#708895}.plays{display:grid;max-height:520px;overflow-y:auto;padding-right:6px}.play{display:grid;grid-template-columns:48px 1fr;gap:10px;padding:12px 2px;border-top:1px solid #203744}.play:first-child{border-top:0}.play-inning{font-size:11px;color:#5eead4;font-weight:800}.play-text{font-size:14px;line-height:1.35}.empty-play{padding:30px 0;color:#708895;text-align:center}.line-card{margin-top:14px;padding:16px}.line-scroll{overflow-x:auto;margin-top:10px}#liveLineScore{width:100%;border-collapse:collapse;min-width:660px}#liveLineScore th,#liveLineScore td{border:1px solid #2d4654;padding:7px 9px;text-align:center;font-size:12px}#liveLineScore th{color:#8399a6;background:#0d202b}#liveLineScore tbody th{text-align:left;color:#e5eef3;max-width:130px;overflow:hidden;text-overflow:ellipsis}.prototype-note{text-align:center;margin-top:16px;color:#536b78;font-size:11px}@media(max-width:760px){.score-hero{grid-template-columns:1fr 90px 1fr;gap:8px}.live-grid{grid-template-columns:1fr}.team strong{font-size:20px}.score{font-size:50px}.inning{font-size:38px}.field{width:280px}.head-right span:first-child{display:none}}
+
+.score-hero{grid-template-columns:minmax(0,1fr) minmax(150px,190px) minmax(0,1fr);overflow:hidden}
+.team{min-width:0;position:relative;z-index:1}
+.team strong{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.game-center{position:relative;z-index:2;min-width:0;padding:0 4px}
+.inning{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.base{width:132px}
+.base strong{max-width:128px;min-width:42px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+.base.occupied strong{font-size:13px;box-shadow:0 0 0 2px rgba(94,234,212,.2),0 4px 14px rgba(0,0,0,.45)}
+@media(max-width:760px){
+  .score-hero{grid-template-columns:minmax(0,1fr) 112px minmax(0,1fr);gap:6px;padding:22px 0}
+  .team strong{font-size:20px}
+  .score{font-size:clamp(40px,12vw,58px)}
+  .inning{font-size:28px}
+}
+
+/* Keep the diamond compact; defensive positions are shown inside it. */
+.base{width:90px}
+.base strong{max-width:90px}
+.field-defense{position:absolute;inset:0;z-index:1;pointer-events:none}
+.field-position{position:absolute;display:flex;align-items:center;gap:3px;max-width:82px;color:#c9d8de;font-size:9px;line-height:1.1;white-space:nowrap}
+.field-position b{display:inline-grid;place-items:center;min-width:22px;padding:3px 2px;border:1px solid #36505f;border-radius:4px;color:#5eead4;background:#0c1c26;font-size:9px}
+.field-position span{max-width:54px;overflow:hidden;text-overflow:ellipsis}
+.field-p{left:50%;top:54%;transform:translate(-50%,-50%)}
+.field-c{left:50%;bottom:0;transform:translateX(-50%)}
+.field-1b{right:0;top:57%}
+.field-2b{right:18px;top:31%}
+.field-3b{left:0;top:57%}
+.field-ss{left:18px;top:31%}
+.field-lf{left:0;top:8%}
+.field-cf{left:50%;top:0;transform:translateX(-50%)}
+.field-rf{right:0;top:8%}
+
+/* 문자중계처럼 점수판과 이닝별 이벤트를 우선 보여준다. */
+.live-shell{width:min(760px,100%);padding:12px 14px 28px}
+.live-shell{display:flex;flex-direction:column}
+.live-head{padding-bottom:10px}
+.score-hero{padding:18px 0 16px;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);gap:10px}
+.team strong{font-size:clamp(18px,4vw,28px)}
+.score{font-size:clamp(42px,9vw,68px)}
+.inning{font-size:clamp(26px,5vw,40px)}
+.live-grid{display:contents}
+.line-card{order:2}
+.field-card{order:3}
+.inning-card{order:4}
+.plays-card{order:5;padding:0;background:transparent;border:0;box-shadow:none}
+.prototype-note{order:99}
+.inning-card{margin:8px 0 10px;padding:10px 12px}
+.inning-card .card-title-row{padding:0;margin:0}
+.inning-selector{display:flex;flex-wrap:nowrap;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.inning-selector button{flex:0 0 auto;padding:7px 12px;font-size:11px;white-space:nowrap}
+.plays-card .relay-title{padding:8px 4px;margin:0}
+.relay-title{margin-top:0!important}
+.plays{max-height:none;padding:0;gap:8px}
+.relay-inning{border:1px solid #253a47;border-radius:8px;background:#0a1822;color:#f8fafc;overflow:hidden}
+.relay-heading{padding:9px 12px;background:#123c4a;color:#b8eadc;font-size:12px;font-weight:800;border-bottom:1px solid #2d4654}
+.relay-inning .play{grid-template-columns:54px 1fr;gap:10px;padding:12px;border-top:1px solid #203744}
+.relay-inning .play:first-of-type{border-top:0}
+.relay-inning .play-inning{color:#5eead4;font-size:10px;font-weight:900}
+.relay-inning .play-text{font-size:14px;font-weight:700;line-height:1.35}
+.field-card{padding:14px}
+.line-card,.inning-card{margin-top:10px}
+@media(max-width:760px){
+  .live-shell{padding:8px 8px 24px}
+  .score-hero{grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);padding:14px 0}
+  .team strong{font-size:19px}
+  .score{font-size:52px}
+  .inning{font-size:27px;letter-spacing:-.04em}
+  .field-card{border-radius:8px}
+}
+
+/* Give the diamond the visual priority of a live baseball field. */
+.field-card{padding:14px 14px 10px;background:linear-gradient(180deg,#102c3a,#0b202b)}
+.field-card>.card-title{color:#9de7d2}
+.field{width:100%;height:320px;margin:8px auto 0;overflow:hidden;border-radius:10px;background:#2b8442}
+.field:before{width:92%;height:78%;left:4%;top:15%;border:0;transform:none;border-radius:50% 50% 46% 46% / 44% 44% 52% 52%;background:#b9a17d;box-shadow:none}
+.field:after{content:"";position:absolute;z-index:1;left:25%;top:29%;width:50%;height:55%;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);background:#2b8442;box-shadow:0 -1px 0 rgba(255,255,255,.15);pointer-events:none}
+.field-lines{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.field-lines path{fill:none;vector-effect:non-scaling-stroke}
+.field-base-line{stroke:rgba(255,255,255,.9);stroke-width:1.8}
+.field-foul-line{stroke:rgba(255,255,255,.9);stroke-width:1.8}
+.base{width:96px}
+.base:before{content:"";position:absolute;z-index:0;left:50%;top:50%;width:42px;height:42px;transform:translate(-50%,-50%);border-radius:50%;background:#b9a17d}
+.base span{display:none}
+.base strong{position:relative;z-index:1;width:24px;height:24px;max-width:94px;padding:0;display:inline-grid;place-items:center;border:2px solid #fff;border-radius:2px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);color:#4a3824;background:#f5ead4;font-weight:900;box-shadow:0 2px 5px rgba(0,0,0,.35)}
+.base.occupied strong{width:auto;height:auto;min-width:42px;padding:5px 8px;clip-path:none;border-radius:8px;color:#fff;background:#e85d43;border-color:#fff}
+.base-2{top:29%;left:50%;transform:translate(-50%,-50%)}
+.base-3{top:55%;left:25%;transform:translate(-50%,-50%)}
+.base-1{top:55%;right:auto;left:75%;transform:translate(-50%,-50%)}
+.pitcher-mound{position:absolute;z-index:2;left:50%;top:61%;width:15%;height:15%;transform:translate(-50%,-50%);border-radius:50%;background:#b9a17d}
+.home-plate{bottom:15%;left:calc(50% - 11px);background:#fff}
+.home-plate:before{content:"";position:absolute;z-index:0;left:-40px;top:-22px;width:102px;height:70px;border-radius:50%;background:#b9a17d}
+.field-position{z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;color:#172b1c;text-shadow:none}
+.field-position b{display:grid;place-items:center;min-width:25px;padding:3px 5px;border:1px solid #fff;border-radius:5px;background:#172b1c;color:#fff;font-size:9px;font-weight:900}
+.field-position span{display:block;max-width:94px;padding:4px 8px;border-radius:12px;background:#172b1c;color:#fff;font-size:10px;font-weight:800;overflow:hidden;text-overflow:ellipsis}
+.field-p{left:50%;top:61%;transform:translate(-50%,-50%)}
+.field-c{left:50%;bottom:8%;transform:translateX(-50%)}
+.field-1b{right:10%;top:55%;transform:translateY(-50%)}
+.field-2b{right:27%;top:38%;transform:translateY(-50%)}
+.field-3b{left:10%;top:55%;transform:translateY(-50%)}
+.field-ss{left:27%;top:38%;transform:translateY(-50%)}
+.field-lf{left:5%;top:12%}
+.field-cf{left:50%;top:3%;transform:translateX(-50%)}
+.field-rf{right:5%;top:12%}
+.batter-panel{padding:7px 2px 2px;border-top:1px solid rgba(157,231,210,.35);gap:2px}
+.batter-panel>span{font-size:8px;color:#8eb8b2}
+.batter-panel strong{font-size:16px}
+.live-count{font-size:10px}
+.live-count b{font-size:13px}
+.live-pitches{font-size:10px;color:#77959d}
+.defense-panel{margin-top:7px;padding-top:7px}
+.line-card{border-color:#31566a;background:linear-gradient(180deg,#102d3b,#0b202b)}
+#liveLineScore th{color:#b8eadc;background:#123c4a}
+#liveLineScore tbody th{color:#f8fafc;background:#164457}
+#liveLineScore td:nth-last-child(3){color:#ffd166;font-weight:900}
+.inning-card{margin-top:14px;padding:16px}.inning-selector{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:10px}.inning-selector button{border:1px solid #36505f;border-radius:8px;background:#0c1c26;color:#b9cbd3;padding:9px 6px;font-weight:800;cursor:pointer}.inning-selector button:hover,.inning-selector button.active{color:#07130f;background:#5eead4;border-color:#5eead4}.inning-selector button:focus-visible{outline:2px solid #fbbf24;outline-offset:2px}
+.live-pitches{margin-top:6px;color:#8fa8b4;font-size:12px;line-height:1.5}
+.defense-panel{border-top:1px solid #263f4c;margin-top:14px;padding-top:14px}.defense-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:9px}.defense-item{display:flex;gap:7px;align-items:center;min-width:0;color:#c9d8de;font-size:12px}.defense-item b{display:inline-grid;place-items:center;min-width:28px;padding:4px 3px;border:1px solid #36505f;border-radius:5px;color:#5eead4;font-size:10px}.defense-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.defense-empty{color:#708895;font-size:12px}
+
+/* =========================================================
+   Naver-style field override — visual layer only.
+   Game state / runner / defense rendering logic stays intact.
+   ========================================================= */
+.field-card{
+  padding:14px 14px 10px;
+  background:linear-gradient(180deg,#102c3a,#0b202b);
+}
+.field-card>.card-title{color:#9de7d2}
+
+.naver-field{
+  position:relative;
+  width:100%;
+  height:330px;
+  margin:8px auto 0;
+  overflow:hidden;
+  border-radius:9px;
+  background:#2f7f40;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* override the older generic field pseudo-elements */
+.naver-field::before,
+.naver-field::after{content:none!important}
+
+.field-dirt{
+  position:absolute;
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.field-dirt path{
+  fill:#b9a17d;
+}
+.naver-field .base-dirt{
+  position:absolute;
+  z-index:2;
+  width:36px;
+  height:28px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#b9a17d;
+}
+.naver-field .base-dirt-3{left:24%;top:61%}
+.naver-field .base-dirt-1{left:76%;top:61%}
+
+.field-infield-grass{
+  position:absolute;
+  z-index:1;
+  left:23.5%;
+  top:35%;
+  width:53%;
+  height:51%;
+  background:#2f7f40;
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+}
+.naver-field .basepaths{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  pointer-events:none;
+}
+.naver-field .basepaths path{
+  fill:none;
+  stroke:#b9a17d;
+  stroke-width:11.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+.naver-field .field-lines{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+  pointer-events:none;
+}
+.naver-field .field-lines path{
+  fill:none;
+  vector-effect:non-scaling-stroke;
+}
+.naver-field .field-foul-line{
+  stroke:rgba(255,255,255,.92);
+  stroke-width:1.55;
+}
+
+/* Bases: small white diamonds when empty, compact runner chip when occupied */
+.naver-field .base{
+  position:absolute;
+  z-index:7;
+  width:112px;
+  height:44px;
+  text-align:center;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.naver-field .base span{display:none}
+.naver-field .base strong{
+  position:absolute;
+  left:50%;top:50%;
+  width:17px;height:17px;
+  min-width:0;max-width:none;
+  margin:0;padding:0;
+  transform:translate(-50%,-50%) rotate(45deg);
+  border:0;
+  border-radius:1px;
+  background:#fff;
+  color:transparent;
+  font-size:0;
+  box-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+.naver-field .base.occupied strong{
+  width:auto;height:auto;
+  min-width:48px;max-width:108px;
+  padding:5px 9px;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.92);
+  border-radius:15px;
+  background:#e75d45;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-shadow:0 2px 6px rgba(0,0,0,.28);
+}
+.naver-field .base-2{left:50%;top:35%}
+.naver-field .base-3{left:24%;top:61%}
+.naver-field .base-1{left:76%;top:61%;right:auto}
+
+.naver-field .pitcher-mound{
+  position:absolute;
+  z-index:2;
+  left:50%;top:64%;
+  width:64px;height:40px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#b9a17d;
+}
+.naver-field .home-dirt{
+  position:absolute;
+  z-index:1;
+  left:50%;bottom:4%;
+  width:80px;height:44px;
+  transform:translateX(-50%);
+  border-radius:55% 55% 45% 45%;
+  background:#b9a17d;
+}
+.naver-field .home-plate{
+  position:absolute;
+  z-index:8;
+  left:50%;bottom:12%;
+  width:18px;height:15px;
+  transform:translateX(-50%);
+  background:#fff;
+  clip-path:polygon(0 0,100% 0,82% 68%,50% 100%,18% 68%);
+}
+.naver-field .home-plate::before{content:none!important}
+.naver-field .field-count{
+  position:absolute;
+  z-index:8;
+  left:4%;
+  bottom:3%;
+  top:auto;
+  transform:none;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:3px;
+  padding:5px 7px;
+  border-radius:8px;
+  background:rgba(8,35,25,.78);
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+  box-shadow:0 2px 5px rgba(0,0,0,.22);
+}
+.naver-field .count-row{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  min-height:9px;
+}
+.naver-field .count-row>b{
+  width:9px;
+  color:#fff;
+  font-size:10px;
+}
+.naver-field .count-row i{
+  display:block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#294c3b;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.naver-field .count-balls i.on{background:#68e56d;box-shadow:0 0 5px rgba(104,229,109,.9)}
+.naver-field .count-strikes i.on{background:#ffd166;box-shadow:0 0 5px rgba(255,209,102,.9)}
+.naver-field .count-outs i.on{background:#ff4b4b;box-shadow:0 0 5px rgba(255,75,75,.9)}
+.naver-field .field-count .count-row i{
+  margin:0;
+}
+
+/* Defensive players: dark-green name pills, similar to Korean live relay UI */
+.naver-field .field-defense{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+}
+.naver-field .field-position{
+  position:absolute;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  max-width:128px;
+  transform:translate(-50%,-50%);
+  color:#fff;
+  white-space:nowrap;
+}
+.naver-field .field-position span{
+  display:block;
+  max-width:120px;
+  padding:5px 9px;
+  border-radius:13px;
+  background:#124e2a;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  line-height:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-shadow:0 1px 2px rgba(0,0,0,.22);
+}
+/* Position codes are still available in the DOM/title, but hidden visually. */
+.naver-field .field-position b{display:none}
+
+.naver-field .field-cf{left:50%;top:8%;transform:translate(-50%,-50%)}
+.naver-field .field-lf{left:10%;top:17%;transform:translate(-50%,-50%)}
+.naver-field .field-rf{left:90%;top:17%;right:auto;transform:translate(-50%,-50%)}
+.naver-field .field-ss{left:29%;top:38%;transform:translate(-50%,-50%)}
+.naver-field .field-2b{left:71%;top:38%;right:auto;transform:translate(-50%,-50%)}
+.naver-field .field-3b{left:13%;top:57%;transform:translate(-50%,-50%)}
+.naver-field .field-1b{left:87%;top:57%;right:auto;transform:translate(-50%,-50%)}
+.naver-field .field-p{left:50%;top:64%;transform:translate(-50%,-50%)}
+.naver-field .field-c{left:50%;top:91%;bottom:auto;transform:translate(-50%,-50%)}
+
+@media(max-width:760px){
+  .naver-field{height:290px}
+  .naver-field .field-position span{font-size:10px;padding:4px 7px;max-width:92px}
+  .naver-field .base{width:90px}
+  .naver-field .base.occupied strong{max-width:86px;font-size:10px}
+}
+
+/* Keep the compact line score inside the card on small screens. */
+#liveLineScore{
+  min-width:0;
+  table-layout:fixed;
+}
+#liveLineScore th,
+#liveLineScore td{
+  padding:7px 4px;
+}
+#liveLineScore tbody th{
+  width:80px;
+  max-width:80px;
+}

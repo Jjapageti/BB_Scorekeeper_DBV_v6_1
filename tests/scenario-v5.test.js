@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const c=require('../core.js');
+const s=c.defaultState();
+s.slots[0].players[0].name='Choi';s.slots[1].players[0].name='Ha';
+c.setPlateAppearance(s,0,0,{inning:'1',playerIndex:0,result:'1B',notation:'1B'});
+c.upsertPlateAppearanceEvent(s,0,0,{outsOnPlay:0,advances:[]});
+let g=c.replayGameState(s);assert.equal(g.currentBatterOrder,2);assert.ok(g.bases[1]);
+let v=c.validateRunnerEventAgainstState(s,{runnerSlotIndex:0,runnerPlayerIndex:0,sourcePaIndex:0,fromBase:1,toBase:2,reason:'SB'});
+const sb=c.addRunnerEvent(s,v);assert.equal(sb.notation,'SB2');g=c.replayGameState(s);assert.ok(g.bases[2]);
+let p=c.validatePitchEventAgainstState(s,{reason:'BK',movements:[{runnerSlotIndex:0,runnerPlayerIndex:0,sourcePaIndex:0,fromBase:2,toBase:3,out:false}]});
+const bk=c.addPitchEvent(s,p);assert.equal(bk.notation,'BK2');g=c.replayGameState(s);assert.ok(g.bases[3]);
+c.removeEvent(s,bk.id);g=c.replayGameState(s);assert.ok(g.bases[2]);assert.equal(g.bases[3],null);
+c.removeEvent(s,sb.id);g=c.replayGameState(s);assert.ok(g.bases[1]);assert.equal(g.bases[2],null);
+assert.throws(()=>c.validateRunnerEventAgainstState(s,{runnerSlotIndex:0,runnerPlayerIndex:0,sourcePaIndex:0,fromBase:2,toBase:3,reason:'SB'}),/2B/);
+console.log('v5 scenario passed');

@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DBV Digital Scoresheet</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-toolbar">
+    <div>
+      <strong>BB Digital Scoresheet</strong>
+      <span>DBV 2024 Layout · v6.1 Live-Prototyp</span>
+      <span id="ruleProfileBadge" class="rule-profile-badge">Regelprofil: DBV / BSVBB 2026 · scorer decision based</span>
+    </div>
+    <div class="toolbar-actions">
+      <button id="runnerEventBtn" type="button">＋ Läufer-Ereignis</button>
+      <button id="pitchEventBtn" type="button">＋ Wurf-Ereignis</button>
+      <button id="exportJsonBtn" type="button">Spiel-JSON</button>
+      <button id="openLiveBtn" class="live-open-btn" type="button">● LIVE</button>
+      <button id="undoBtn" type="button">↶ Rückgängig</button>
+      <button id="redoBtn" type="button">↷ Wiederholen</button>
+      <button id="zoomOutBtn" type="button">−</button>
+      <span id="zoomLabel">100%</span>
+      <button id="zoomInBtn" type="button">＋</button>
+      <button id="resetBtn" class="danger" type="button">Zurücksetzen</button>
+      <button id="finishGameBtn" type="button">Spiel beenden</button>
+    </div>
+  </div>
+  <nav id="teamTabs" class="team-tabs" aria-label="Mannschaft auswählen">
+    <button type="button" data-team-side="guest" class="active">Gast-Team</button>
+    <button type="button" data-team-side="home">Heim-Team</button>
+  </nav>
+
+  <section id="gameStatePanel" class="game-state-panel" aria-label="Aktueller Spielstand">
+    <div class="state-item"><span>Inning</span><strong id="stateInning">-</strong></div>
+    <div class="state-item"><span>Schlagmann</span><strong id="stateBatter">1</strong></div>
+    <div class="state-item"><span>Aus</span><strong id="stateOuts">0</strong></div>
+    <div class="state-item"><span>1B</span><strong id="stateBase1">-</strong></div>
+    <div class="state-item"><span>2B</span><strong id="stateBase2">-</strong></div>
+    <div class="state-item"><span>3B</span><strong id="stateBase3">-</strong></div>
+    <div class="state-item"><span>Punkte</span><strong id="stateRuns">0</strong></div>
+    <div id="stateWarning" class="state-warning"></div>
+  </section>
+
+  <section id="quickScoringPanel" class="quick-scoring-panel" aria-label="Schnelleingabe">
+    <div class="quick-scoring-head">
+      <div>
+        <strong>Schnelleingabe</strong>
+        <span id="quickScoringState" class="muted">Aktuellen Schlagmann auswählen.</span>
+      </div>
+      <button id="quickMoreBtn" type="button">Details</button>
+    </div>
+    <div class="quick-count-row" aria-label="Ball- und Strike-Zähler">
+      <button type="button" data-pitch-count="balls">Balls <strong id="quickBalls">0</strong></button>
+      <button type="button" data-pitch-count="strikes">Strikes <strong id="quickStrikes">0</strong></button>
+      <button id="quickCountReset" type="button">Zähler zurücksetzen</button>
+      <label>Schlagrichtung
+        <select id="quickHitDirection">
+          <option value="">Nicht angegeben</option><option value="LF">Left Field</option><option value="LC">Left Center</option>
+          <option value="CF">Center Field</option><option value="RC">Right Center</option><option value="RF">Right Field</option>
+          <option value="3B">3. Base</option><option value="SS">Shortstop</option><option value="2B">2. Base</option>
+          <option value="1B">1. Base</option><option value="P">Pitcher</option><option value="C">Catcher</option>
+        </select>
+      </label>
+      <label id="currentPitcherLabel">Defensiver Pitcher
+        <select id="currentPitcherSelect"></select>
+      </label>
+    </div>
+    <div class="quick-result-grid" role="group" aria-label="Schlagergebnis">
+      <button type="button" class="quick-result hit" data-quick-result="1B">1B</button>
+      <button type="button" class="quick-result hit" data-quick-result="2B">2B</button>
+      <button type="button" class="quick-result hit" data-quick-result="3B">3B</button>
+      <button type="button" class="quick-result run" data-quick-result="HR">HR</button>
+      <button type="button" class="quick-result" data-quick-result="BB">BB</button>
+      <button type="button" class="quick-result" data-quick-result="HBP">HBP</button>
+      <button type="button" class="quick-result out" data-quick-result="K">K</button>
+      <button type="button" class="quick-result out" data-quick-result="GO">GO</button>
+      <button type="button" class="quick-result out" data-quick-result="FO">FO</button>
+      <button type="button" class="quick-result out" data-quick-result="LO">LO</button>
+      <button type="button" class="quick-result" data-quick-result="SF">SF</button>
+      <button type="button" class="quick-result" data-quick-result="SH">SH</button>
+    </div>
+    <div class="quick-scoring-foot">
+      <span>Läuferbewegungen, RBI und Notation können unter Details bearbeitet werden.</span>
+      <button id="quickRunnerBtn" type="button">Läufer-Ereignis</button>
+    </div>
+  </section>
+
+  <details class="event-log-panel">
+    <summary>Ereignisprotokoll · Gespeicherte Spielzüge bearbeiten/stornieren</summary>
+    <div id="eventLog" class="event-log"></div>
+  </details>
+
+  <main class="viewport">
+    <section id="paper" class="paper">
+      <header class="sheet-top">
+        <div class="team-block">
+          <div class="dbv-mark" aria-label="DBV">DBV</div>
+          <div class="team-lines">
+            <label><input id="guestCheck" type="checkbox" data-path="game.guestChecked" /> Gast:</label>
+            <input class="line-input" data-path="game.guest" />
+            <label><input id="homeCheck" type="checkbox" data-path="game.homeChecked" /> Heim:</label>
+            <input class="line-input" data-path="game.home" />
+            <div class="tiny-note">Graue Felder vor Spielbeginn vollständig ausfüllen.</div>
+          </div>
+        </div>
+
+        <div class="center-top">
+          <div class="dbv-title">Offizieller Spielberichtsbogen des Deutschen Baseball- und Softball-Verbandes e.V.</div>
+          <div class="version">Version 2024</div>
+          <table class="line-score" aria-label="Line score">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="inning">1</th><th class="inning">2</th><th class="inning">3</th><th class="inning">4</th>
+                <th class="inning">5</th><th class="inning">6</th><th class="inning">7</th><th class="inning">8</th>
+                <th class="inning">9</th><th class="inning">10</th><th class="inning">11</th><th class="inning">12</th>
+                <th>R</th><th>H</th><th>E</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>G</th><td colspan="15" id="guestLineScore"></td></tr>
+              <tr><th>H</th><td colspan="15" id="homeLineScore"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="game-meta">
+          <div><span>Gespielt am:</span><input data-path="game.date" type="date" /></div>
+          <div><span>in:</span><input data-path="game.place" /></div>
+          <div class="meta-inline"><span>BB</span><input type="checkbox" data-path="game.bb" /><span>SB</span><input type="checkbox" data-path="game.sb" /></div>
+          <div><span>Liga:</span><input data-path="game.league" /></div>
+          <div><span>Verband:</span><input data-path="game.association" /></div>
+          <div><span>Spiel-Nr.:</span><input data-path="game.gameNo" /></div>
+          <div><span>Spiel-Innings:</span><select data-path="game.innings"><option value="7">7 Innings</option><option value="9">9 Innings</option></select></div>
+          <div><span>Beginn:</span><input data-path="game.start" type="time" /></div>
+          <div><span>Ende:</span><input data-path="game.end" type="time" /></div>
+          <div><span>Dauer:</span><input data-path="game.duration" /></div>
+          <div><span>Beendigungsgrund:</span><select data-path="game.endReason"><option value="">Läuft</option><option value="completed">Regulär beendet</option><option value="cold">Ten-Run-Rule / Mercy Rule</option><option value="forfeit">Forfait</option><option value="weather">Wetterabbruch</option><option value="other">Sonstiger Grund</option></select></div>
+          <div><span>Zuschauer:</span><input data-path="game.spectators" /></div>
+        </div>
+      </header>
+
+      <div class="sheet-toolbar"><button id="addInningSheetBtn" type="button">＋ Zusätzliches Inning-Blatt (ab dem 10. Inning)</button><span id="inningSheetStatus"></span></div>
+      <div class="sheet-scroll">
+        <table id="mainScoreTable" class="main-score-table">
+          <thead>
+            <tr>
+              <th>A</th><th>PO</th><th>E</th><th>DP</th><th>IP</th>
+              <th>Nr.</th><th class="name-head">Name</th><th>Pass-Nr.</th>
+              <th>Pos</th><th>In</th><th>Pos</th><th>In</th>
+              <th class="order-head"></th>
+              <th class="inning-head" title="Inning 1">1</th><th class="inning-head" title="Inning 2">2</th><th class="inning-head" title="Inning 3">3</th><th class="inning-head" title="Inning 4">4</th><th class="inning-head" title="Inning 5">5</th>
+              <th class="inning-head" title="Inning 6">6</th><th class="inning-head" title="Inning 7">7</th><th class="inning-head" title="Inning 8">8</th><th class="inning-head" title="Inning 9">9</th><th class="inning-head" title="Inning 10">10</th>
+              <th class="batter-stat-head">PA</th><th class="batter-stat-head">AB</th><th class="batter-stat-head">R</th><th class="batter-stat-head">RBI</th>
+              <th class="batter-stat-head">H</th><th class="batter-stat-head">2B</th><th class="batter-stat-head">3B</th><th class="batter-stat-head">HR</th>
+              <th class="batter-stat-head">K</th><th class="batter-stat-head">BB/IBB</th><th class="batter-stat-head">HP</th><th class="batter-stat-head">SH</th>
+              <th class="batter-stat-head">SF</th><th class="batter-stat-head">SB</th><th class="batter-stat-head">CS</th>
+            </tr>
+          </thead>
+          <tbody id="mainScoreBody"></tbody>
+          <tfoot id="mainScoreFoot"></tfoot>
+        </table>
+      </div>
+
+      <div class="checks-strip">
+        <div class="formula-line">
+          <span class="box-label">AB</span><input data-path="checks.ab" />
+          <span>+</span><span class="box-label">BB</span><input data-path="checks.bb" />
+          <span>+</span><span class="box-label">HP</span><input data-path="checks.hp" />
+          <span>+</span><span class="box-label">SH</span><input data-path="checks.sh" />
+          <span>+</span><span class="box-label">SF</span><input data-path="checks.sf" />
+          <span>=</span><span class="box-label">PA</span><input data-path="checks.pa" />
+        </div>
+        <div class="formula-line">
+          <span class="box-label">R</span><input data-path="checks.r" />
+          <span>+</span><span class="box-label">LOB</span><input data-path="checks.lob" />
+          <span>+</span><span class="box-label">PO(Gegner)</span><input data-path="checks.opponentPo" />
+          <span>=</span><span class="box-label">PA</span><input data-path="checks.pa2" />
+        </div>
+      </div>
+
+      <section class="bottom-grid">
+        <div class="pitching-block">
+          <div id="pitcherTableTitle" class="table-section-title">Gegnerische Pitcher</div>
+          <table id="pitcherTable" class="small-grid-table">
+            <thead>
+              <tr>
+                <th>A</th><th>PO</th><th>E</th><th>DP</th><th>IP</th><th>Nr.</th>
+                <th class="pitcher-name-head">Pitcher</th><th>Pass-Nr.</th>
+                <th class="pitcher-stat-head">BF</th><th class="pitcher-stat-head">AB</th><th class="pitcher-stat-head">R</th><th class="pitcher-stat-head">ER</th>
+                <th class="pitcher-stat-head">H</th><th class="pitcher-stat-head">2B</th><th class="pitcher-stat-head">3B</th><th class="pitcher-stat-head">HR</th>
+                <th class="pitcher-stat-head">K</th><th class="pitcher-stat-head">BB/IBB</th><th class="pitcher-stat-head">HP</th><th class="pitcher-stat-head">SH</th>
+                <th class="pitcher-stat-head">SF</th><th class="pitcher-stat-head">WP</th><th class="pitcher-stat-head">BK</th><th class="pitcher-stat-head">WLS</th>
+              </tr>
+            </thead>
+            <tbody id="pitcherBody"></tbody>
+            <tfoot><tr><th colspan="8">Gesamt</th><td colspan="16" id="pitcherTotals"></td></tr></tfoot>
+          </table>
+          <div class="row-tools pitcher-tools"><button id="addPitcherBtn" type="button">＋ Pitcher</button><span>Weitere Spieler können hinzugefügt werden.</span></div>
+          <div class="team-pitcher-row"><span>Team-Pitcher</span><input data-path="teamPitcher" /></div>
+          <div class="comment-row"><span>Anmerkungen</span><input data-path="comments" /></div>
+          <div class="check-note">Kontrolle L_PO = 3 × IP</div>
+        </div>
+
+        <div class="catcher-block">
+          <table id="catcherTable" class="small-grid-table catcher-table">
+            <thead><tr><th>Catcher</th><th>PB</th><th>SB</th><th>CS</th></tr></thead>
+            <tbody id="catcherBody"></tbody>
+            <tfoot><tr><th>Gesamt</th><td colspan="3"></td></tr></tfoot>
+          </table>
+          <div class="yesno-row"><span>Protest:</span><label><input type="checkbox" data-path="protestYes" /> Ja</label><label><input type="checkbox" data-path="protestNo" /> Nein</label></div>
+          <div class="yesno-row"><span>Kommentare auf Rückseite:</span><label><input type="checkbox" data-path="backCommentYes" /> Ja</label><label><input type="checkbox" data-path="backCommentNo" /> Nein</label></div>
+        </div>
+
+        <div id="officialsBlock" class="officials-block">
+          <label>Schiedsrichter<input data-path="officials.umpire1" /></label>
+          <label><span></span><input data-path="officials.umpire2" /></label>
+          <label>Scorer<input data-path="officials.scorer" /></label>
+          <div class="signature-grid">
+            <label>Scorer<input data-path="signatures.scorer" /></label>
+            <label>Schiedsrichter<input data-path="signatures.umpire" /></label>
+            <label>Manager Heim<input data-path="signatures.homeManager" /></label>
+            <label>Manager Gast<input data-path="signatures.guestManager" /></label>
+          </div>
+        </div>
+      </section>
+
+      <div class="back-note">Weitere Kommentare auf der Rückseite notieren.</div>
+    </section>
+  </main>
+
+  <dialog id="entryDialog">
+    <form id="entryForm" class="entry-form">
+      <div class="dialog-head">
+        <div>
+          <strong id="dialogTitle">Plate Appearance</strong>
+          <div id="dialogSubtitle" class="muted"></div>
+        </div>
+        <button type="button" class="icon-btn" id="dialogCloseBtn">✕</button>
+      </div>
+
+      <div class="pa-meta-grid">
+        <label>Inning (automatisch)
+          <input id="inningInput" readonly type="number" min="1" max="99" inputmode="numeric" placeholder="z. B. 3" />
+        </label>
+        <label>Schlagmann dieses Plate Appearances
+          <select id="playerSelect"></select>
+        </label>
+      </div>
+
+      <label>Ergebnis des Plate Appearances
+        <select id="resultSelect">
+          <option value="">-- auswählen --</option>
+          <option value="1B">1B · Single</option><option value="2B">2B · Double</option><option value="3B">3B · Triple</option><option value="HR">HR · Home Run</option>
+          <option value="BB">BB · Walk</option><option value="IBB">IBB · Intentional Walk</option><option value="HBP">HBP · Hit by Pitch</option><option value="K">K · Strikeout</option>
+          <option value="GO">GO · Ground Out</option><option value="FO">FO · Fly Out</option><option value="LO">LO · Line Out</option><option value="FC">FC · Fielder's Choice</option>
+          <option value="E">E · Error</option><option value="SF">SF · Sac Fly</option><option value="SH">SH · Sac Hit</option><option value="OTHER">Other</option>
+        </select>
+      </label>
+
+      <label>Notation
+        <input id="notationInput" placeholder="z. B. 6-3, E6, F8, K" />
+      </label>
+      <label>Schlagrichtung
+        <select id="hitDirection">
+          <option value="">Nicht angegeben</option><option value="LF">Left Field</option><option value="LC">Left Center</option>
+          <option value="CF">Center Field</option><option value="RC">Right Center</option><option value="RF">Right Field</option>
+          <option value="3B">3. Base</option><option value="SS">Shortstop</option><option value="2B">2. Base</option>
+          <option value="1B">1. Base</option><option value="P">Pitcher</option><option value="C">Catcher</option>
+        </select>
+      </label>
+
+      <div class="auto-reach">Erreicht durch Ergebnis: <strong id="autoReachText">-</strong></div>
+
+      <div class="pa-meta-grid">
+        <label>Aus beim Spielzug
+          <select id="outsOnPlay"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </label>
+        <div class="current-state-hint" id="paStateHint"></div>
+      </div>
+
+      <div class="pa-meta-grid rbi-grid">
+        <label>RBI <span class="muted">(automatische Empfehlung · bearbeitbar)</span>
+          <input id="rbiInput" type="number" min="0" max="4" step="1" value="0" />
+        </label>
+        <div class="rbi-auto-box">
+          <div id="rbiHint" class="current-state-hint">Automatische Empfehlung: 0</div>
+          <button id="rbiAutoBtn" type="button">Automatik verwenden</button>
+        </div>
+      </div>
+
+      <fieldset class="pa-runner-fieldset">
+        <legend>Bestehende Läufer, die sich bei diesem Spielzug bewegt haben</legend>
+        <div id="paRunnerMovements"></div>
+        <div class="muted">Läuferbewegungen durch Hit, FC oder Error hier angeben. SB / CS / WP / PB / BK werden als separate Ereignisse erfasst.</div>
+      </fieldset>
+
+      <div class="event-separation-note">SB / CS / Pickoff und andere <strong>Läuferereignisse</strong> über <strong>＋ Läufer-Ereignis</strong>, WP / PB / BK über <strong>＋ Wurf-Ereignis</strong> erfassen.</div>
+
+      <label>Notiz
+        <textarea id="memoInput" rows="2" placeholder="optional"></textarea>
+      </label>
+
+      <div class="dialog-actions">
+        <button id="deleteEntryBtn" type="button" class="danger">Löschen</button>
+        <span class="spacer"></span>
+        <button id="cancelEntryBtn" type="button">Abbrechen</button>
+        <button id="saveEntryBtn" type="submit" class="primary">Speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+
+  <dialog id="runnerDialog">
+    <form id="runnerForm" class="entry-form">
+      <div class="dialog-head">
+        <div>
+          <strong id="runnerDialogTitle">Läufer-Ereignis</strong>
+          <div class="muted">Nur Läufer auswählen, die sich tatsächlich auf einer Base befinden.</div>
+        </div>
+        <button type="button" class="icon-btn" id="runnerCloseBtn">✕</button>
+      </div>
+
+      <div id="runnerStateText" class="current-state-box"></div>
+
+      <label>Läufer
+        <select id="runnerPlayer"></select>
+      </label>
+
+      <div class="pa-meta-grid">
+        <label>Von<input id="runnerFromBase" readonly /></label>
+        <label>Nach<select id="runnerToBase"></select></label>
+      </div>
+
+      <div class="pa-meta-grid">
+        <label>Grund
+          <select id="runnerReason">
+            <option value="SB">SB · Gestohlene Base</option>
+            <option value="CS">CS · Beim Stehlen aus</option>
+            <option value="PK">PK · Pickoff</option>
+            <option value="E">E · Error</option>
+            <option value="FC">FC · Fielder's Choice</option>
+            <option value="OTHER">Sonstiges</option>
+          </select>
+        </label>
+        <label>DBV-Notation<input id="runnerNotation" placeholder="z. B. SB2, CS 2-4, PK" /></label>
+      </div>
+      <label class="score-check"><input id="runnerOut" type="checkbox" /> Läufer OUT</label>
+      <label>Notiz<textarea id="runnerMemo" rows="2"></textarea></label>
+
+      <div class="dialog-actions">
+        <span class="spacer"></span>
+        <button id="runnerCancelBtn" type="button">Abbrechen</button>
+        <button type="submit" class="primary">Läufer-Ereignis speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+
+  <dialog id="pitchDialog">
+    <form id="pitchForm" class="entry-form">
+      <div class="dialog-head">
+        <div>
+          <strong id="pitchDialogTitle">Wurf-Ereignis</strong>
+          <div class="muted">Eine tatsächliche Bewegung eines Läufers durch WP / PB / BK erfassen.</div>
+        </div>
+        <button type="button" class="icon-btn" id="pitchCloseBtn">✕</button>
+      </div>
+
+      <div id="pitchStateText" class="current-state-box"></div>
+
+      <div class="pa-meta-grid">
+        <label>Grund
+          <select id="pitchReason"><option value="WP">WP · Wild Pitch</option><option value="PB">PB · Passed Ball</option><option value="BK">BK · Balk</option></select>
+        </label>
+        <label>DBV-Notation<input id="pitchNotation" readonly /></label>
+      </div>
+
+      <fieldset class="pitch-movements-fieldset">
+        <legend>Aktuelle Läuferbewegung</legend>
+        <div id="pitchMovements"></div>
+        <button id="addPitchMovementBtn" type="button" hidden>＋ Läuferbewegung</button>
+      </fieldset>
+
+      <label>Notiz<textarea id="pitchMemo" rows="2"></textarea></label>
+
+      <div class="dialog-actions">
+        <span class="spacer"></span>
+        <button id="pitchCancelBtn" type="button">Abbrechen</button>
+        <button type="submit" class="primary">Wurf-Ereignis speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="core.js?v=6.1.42"></script>
+  <script src="app.js?v=6.1.43"></script>
+</body>
+</html>

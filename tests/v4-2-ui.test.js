@@ -1,0 +1,10 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+assert.match(html, /id="runnerEventBtn"/);
+assert.match(html, /id="pitchEventBtn"/);
+assert.match(html, /id="pitchDialog"/);
+assert.match(html, /id="addPitchMovementBtn"/);
+assert.doesNotMatch(html, /<option value="WP">WP · Wild Pitch<\/option>[\s\S]*id="runnerReason"/);
+console.log('v4.2 UI event separation passed');

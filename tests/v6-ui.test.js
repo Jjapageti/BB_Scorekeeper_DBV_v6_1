@@ -1,0 +1,13 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const js=fs.readFileSync(path.join(root,'app.js'),'utf8');
+assert.match(html,/id="rbiInput"/,'PA dialog has RBI input');
+assert.match(html,/자동 추천/,'RBI input explains automatic recommendation');
+assert.match(html,/id="rbiAutoBtn"/,'scorer can return RBI to automatic recommendation');
+assert.match(js,/calculateBatterStats/,'batter grid is rendered from derived event stats');
+assert.match(js,/recommendPlateAppearanceRbi/,'UI uses RBI recommendation helper');
+assert.match(js,/readOnly\s*=\s*true/,'derived batter stat cells are read-only');
+console.log('v6 UI tests passed');

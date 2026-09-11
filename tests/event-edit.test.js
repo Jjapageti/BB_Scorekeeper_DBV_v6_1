@@ -1,0 +1,16 @@
+const assert = require('node:assert/strict');
+const core = require('../core.js');
+const state=core.defaultState();
+state.slots[0].players[0].name='Choi';
+core.setPlateAppearance(state,0,0,{inning:'1',playerIndex:0,result:'1B',notation:'1B'});
+core.upsertPlateAppearanceEvent(state,0,0,{outsOnPlay:0,advances:[]});
+const event=core.addRunnerEvent(state,{inning:'1',runnerSlotIndex:0,runnerPlayerIndex:0,sourcePaIndex:0,fromBase:1,toBase:2,reason:'SB',batterOrder:2});
+assert.equal(event.revision,1);
+const edited=core.updateRunnerEvent(state,event.id,{toBase:3,reason:'E',notation:'E4',out:false});
+assert.equal(edited.id,event.id);
+assert.equal(edited.sequence,event.sequence);
+assert.equal(edited.revision,2);
+assert.equal(edited.toBase,3);
+assert.equal(core.removeEvent(state,event.id),true);
+assert.equal(state.events.some(e=>e.id===event.id),false);
+console.log('event edit tests passed');

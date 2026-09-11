@@ -1,0 +1,10 @@
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync(require('node:path').join(__dirname,'..','index.html'),'utf8');
+assert.match(html, /id="ruleProfileBadge"/);
+assert.match(html, /id="runnerEventBtn"/);
+assert.match(html, /id="exportJsonBtn"/);
+assert.match(html, /id="runnerDialog"/);
+assert.match(html, /id="runnerReason"/);
+assert.doesNotMatch(html, /id="runnerBatterOrder"/, 'v5 derives batter order from game state');
+console.log('rule-profile UI structure passed');

@@ -1,0 +1,14 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const js=fs.readFileSync(path.join(root,'app.js'),'utf8');
+assert.match(html,/id="gameStatePanel"/,'current game state panel exists');
+assert.match(html,/id="eventLog"/,'event log exists');
+assert.match(html,/id="paRunnerMovements"/,'PA dialog has same-play runner movement section');
+assert.doesNotMatch(html,/id="runnerBatterOrder"/,'runner event batter order is no longer manually entered');
+assert.doesNotMatch(html,/id="pitchBatterOrder"/,'pitch event batter order is no longer manually entered');
+assert.match(js,/replayGameState/,'UI derives current bases and current batter from event replay');
+assert.match(js,/removeEvent/,'UI can cancel saved events');
+console.log('v5 UI tests passed');
