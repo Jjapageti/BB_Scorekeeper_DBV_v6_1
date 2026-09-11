@@ -133,7 +133,6 @@ window.BBFirebaseSync?.subscribe(remoteState=>{
   if(next===lastRaw)return;
   localStorage.setItem(STORAGE_KEY,next);
   lastRaw=next;
-  state=ScorekeeperCore.ensureStateShape(remoteState);
   render();
 });
 })();
