@@ -135,4 +135,9 @@ window.BBFirebaseSync?.subscribe(remoteState=>{
   lastRaw=next;
   render();
 });
+window.BBFirebaseSync?.watchPresence(presence=>{
+  const connection=$('#connectionState');
+  if(!connection)return;
+  connection.textContent=presence.online?'SCORER ONLINE':'SCORER OFFLINE · SPIEL NICHT BEENDET';
+});
 })();

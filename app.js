@@ -296,6 +296,7 @@ $('#resultSelect').addEventListener('change',onResultChange);$('#rbiInput').addE
 $('#addInningSheetBtn').addEventListener('click',()=>{const current=Math.max(10,Number(state.game.scoreColumns)||10);if(current>=PA_COLUMNS){alert(`Maximal ${PA_COLUMNS} Innings können hinzugefügt werden.`);return;}pushHistory();state.game.scoreColumns=Math.min(PA_COLUMNS,current+10);save();renderAll();});
 $('#finishGameBtn').addEventListener('click',()=>{const reason=state.game.endReason||'completed';if(!confirm(`Spiel mit dem Grund „${reason}“ beenden?`))return;pushHistory();finishGame();});
 renderAll();updateUndo();setZoom(1);
+window.BBFirebaseSync?.startPresence();
 window.BBFirebaseSync?.subscribe(remoteState=>{
   const activeSide=state.activeSide;
   state=ensureStateShape(remoteState);

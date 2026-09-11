@@ -14,6 +14,7 @@
   const statePath = 'games/default/state';
   const app = firebase.initializeApp(firebaseConfig);
   const stateRef = app.database().ref(statePath);
+  const presenceRef = app.database().ref('games/default/presence/scorer');
   const encodeKey = key => key.replace(/[.#$\/\[\]]/g, char => `_fb${char.charCodeAt(0).toString(16)}_`);
   const decodeKey = key => key.replace(/_fb([0-9a-f]+)_/g, (_, code) => String.fromCharCode(parseInt(code, 16)));
   const encodeValue = value => {
@@ -44,6 +45,24 @@
       };
       stateRef.on('value', handleValue, handleError);
       return () => stateRef.off('value', handleValue);
+    },
+    watchPresence(onPresence) {
+      const handleValue = snapshot => onPresence(snapshot.val() || {online:false});
+      presenceRef.on('value', handleValue);
+      return () => presenceRef.off('value', handleValue);
+    },
+    startPresence() {
+      const connectedRef = app.database().ref('.info/connected');
+      connectedRef.on('value', snapshot => {
+        if (snapshot.val() !== true) return;
+        presenceRef.onDisconnect().set({
+          online: false,
+          lastSeen: firebase.database.ServerValue.TIMESTAMP
+        }).then(() => presenceRef.set({
+          online: true,
+          lastSeen: firebase.database.ServerValue.TIMESTAMP
+        }));
+      });
     }
   };
 })();
