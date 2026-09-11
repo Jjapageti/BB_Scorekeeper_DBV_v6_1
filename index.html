@@ -55,7 +55,7 @@
       <button type="button" data-pitch-count="balls">Balls <strong id="quickBalls">0</strong></button>
       <button type="button" data-pitch-count="strikes">Strikes <strong id="quickStrikes">0</strong></button>
       <button id="quickCountReset" type="button">Zähler zurücksetzen</button>
-      <label>Schlagrichtung
+      <label class="quick-direction-select">Schlagrichtung
         <select id="quickHitDirection">
           <option value="">Nicht angegeben</option><option value="LF">Left Field</option><option value="LC">Left Center</option>
           <option value="CF">Center Field</option><option value="RC">Right Center</option><option value="RF">Right Field</option>
@@ -67,7 +67,34 @@
         <select id="currentPitcherSelect"></select>
       </label>
     </div>
-    <div class="quick-result-grid" role="group" aria-label="Schlagergebnis">
+    <div class="quick-input-layout">
+      <div id="quickDirectionPicker" class="quick-direction-picker" aria-label="Schlagrichtung auf dem Feld">
+        <span id="quickDirectionState" class="quick-direction-title">Treffpunkt auswählen</span>
+        <div class="quick-direction-field">
+          <svg class="quick-field-dirt" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 86 L7 45 C13 27 31 16 50 16 C69 16 87 27 93 45 Z"></path></svg>
+          <div class="quick-field-infield-grass" aria-hidden="true"></div>
+          <svg class="quick-field-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 88 L0 36"></path><path d="M50 88 L100 36"></path></svg>
+          <div class="quick-pitcher-mound" aria-hidden="true"></div><div class="quick-home-dirt" aria-hidden="true"></div>
+          <svg class="quick-direction-line-layer" viewBox="0 0 300 150" aria-hidden="true"><line id="quickDirectionLine" x1="150" y1="142" x2="150" y2="142"></line></svg>
+        <button type="button" class="quick-direction-zone zone-lf" data-hit-direction="LF">LF</button>
+        <button type="button" class="quick-direction-zone zone-lc" data-hit-direction="LC">LC</button>
+        <button type="button" class="quick-direction-zone zone-cf" data-hit-direction="CF">CF</button>
+        <button type="button" class="quick-direction-zone zone-rc" data-hit-direction="RC">RC</button>
+        <button type="button" class="quick-direction-zone zone-rf" data-hit-direction="RF">RF</button>
+        <button type="button" class="quick-direction-zone zone-3b" data-hit-direction="3B">3B</button>
+        <button type="button" class="quick-direction-zone zone-ss" data-hit-direction="SS">SS</button>
+        <button type="button" class="quick-direction-zone zone-2b" data-hit-direction="2B">2B</button>
+        <button type="button" class="quick-direction-zone zone-1b" data-hit-direction="1B">1B</button>
+        <button type="button" class="quick-direction-zone zone-p" data-hit-direction="P">P</button>
+        <button type="button" class="quick-direction-zone zone-c" data-hit-direction="C">C</button>
+        <span class="quick-direction-home"></span>
+        </div>
+        <div class="quick-direction-actions">
+          <button type="button" id="quickDirectionClear" class="quick-direction-clear">Richtung löschen</button>
+          <button type="button" id="quickDirectionCancel" class="quick-direction-cancel">Abbrechen</button>
+        </div>
+      </div>
+      <div class="quick-result-grid" role="group" aria-label="Schlagergebnis">
       <button type="button" class="quick-result hit" data-quick-result="1B">1B</button>
       <button type="button" class="quick-result hit" data-quick-result="2B">2B</button>
       <button type="button" class="quick-result hit" data-quick-result="3B">3B</button>
@@ -80,7 +107,8 @@
       <button type="button" class="quick-result out" data-quick-result="LO">LO</button>
       <button type="button" class="quick-result" data-quick-result="SF">SF</button>
       <button type="button" class="quick-result" data-quick-result="SH">SH</button>
-      <button type="button" class="quick-result error" data-quick-result="E">E</button>
+        <button type="button" class="quick-result error" data-quick-result="E">E</button>
+      </div>
     </div>
     <div class="quick-scoring-foot">
       <span>Läuferbewegungen, RBI und Notation können unter Details bearbeitet werden.</span>
@@ -399,6 +427,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="firebase-sync.js?v=4"></script>
   <script src="core.js?v=6.1.43"></script>
-  <script src="app.js?v=6.1.44"></script>
+  <script src="app.js?v=6.1.45"></script>
 </body>
 </html>
