@@ -721,8 +721,9 @@
         'SF':'schlägt einen Sacrifice Fly','SH':'schlägt einen Sacrifice Bunt','OTHER':'beendet das Plate Appearance'
       };
       const count=` (${Number(event.balls)||0}-${Number(event.strikes)||0})`;
+      const direction=event.hitDirection?` nach ${event.hitDirection}`:'';
       const pitchSequence=Array.isArray(event.pitches)&&event.pitches.length?` ${event.pitches.map((pitch,i)=>`${i+1}. ${pitch==='B'?'Ball':'Strike'}`).join(', ')}`:'';
-      return {id:event.id,sequence:Number(event.sequence)||0,inning,type:event.type,text:`${p.name} ${phrases[result]||String(event.notation||result||'records a play')}${count}.${pitchSequence}`};
+      return {id:event.id,sequence:Number(event.sequence)||0,inning,type:event.type,text:`${p.name} ${phrases[result]||String(event.notation||result||'records a play')}${direction}${count}.${pitchSequence}`};
     }
     if(event?.type==='runner_advance'){
       const p=livePlayerRef(state,event.runnerSlotIndex,event.runnerPlayerIndex);

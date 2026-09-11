@@ -180,7 +180,7 @@ function saveEntry(e){
   if(!input.result&&!input.notation&&!input.memo){alert('Bitte Ergebnis oder Notation eingeben, bevor Sie speichern.');return;}
   let valid;try{valid=ScorekeeperCore.validatePlateAppearanceAgainstState(state,slotIndex,paIndex,input);}catch(err){alert(err.message);return;}
   const defensiveSide=state.activeSide==='home'?'guest':'home';
-  pushHistory();ScorekeeperCore.setPlateAppearance(state,slotIndex,paIndex,valid);ScorekeeperCore.upsertPlateAppearanceEvent(state,slotIndex,paIndex,{pitcherIndex:state.game.currentPitcherIndex,pitcherSide:defensiveSide,balls:valid.balls,strikes:valid.strikes,pitches:valid.pitches,outsOnPlay:valid.outsOnPlay,advances:valid.advances,rbi:valid.rbi,rbiMode:valid.rbiMode});state.game.currentAtBat={balls:0,strikes:0,pitches:[],hitDirection:''};save();$('#entryDialog').close();activeCell=null;renderAll();
+  pushHistory();ScorekeeperCore.setPlateAppearance(state,slotIndex,paIndex,valid);ScorekeeperCore.upsertPlateAppearanceEvent(state,slotIndex,paIndex,{pitcherIndex:state.game.currentPitcherIndex,pitcherSide:defensiveSide,hitDirection:valid.hitDirection,balls:valid.balls,strikes:valid.strikes,pitches:valid.pitches,outsOnPlay:valid.outsOnPlay,advances:valid.advances,rbi:valid.rbi,rbiMode:valid.rbiMode});state.game.currentAtBat={balls:0,strikes:0,pitches:[],hitDirection:''};save();$('#entryDialog').close();activeCell=null;renderAll();
 }
 function deleteEntry(){if(!activeCell)return;if(!confirm('Dieses Plate Appearance und nachfolgende verbundene Ereignisse stornieren?'))return;pushHistory();const side=state.activeSide==='home'?'home':'guest';const event=(state.events||[]).find(e=>e.type==='plate_appearance'&&e.side===side&&Number(e.slotIndex)===activeCell.slotIndex&&Number(e.paIndex)===activeCell.paIndex);if(event)ScorekeeperCore.removeEvent(state,event.id);else state.slots[activeCell.slotIndex].plateAppearances[activeCell.paIndex]=null;save();$('#entryDialog').close();activeCell=null;renderAll();}
 
@@ -235,7 +235,7 @@ function quickRecord(result){
     $('#resultSelect').value=result;onResultChange();$('#notationInput').value=notation;$('#hitDirection').value=input.hitDirection;
     return;
   }
-  pushHistory();ScorekeeperCore.setPlateAppearance(state,target.slotIndex,target.paIndex,valid);ScorekeeperCore.upsertPlateAppearanceEvent(state,target.slotIndex,target.paIndex,{pitcherIndex:state.game.currentPitcherIndex,pitcherSide:defensiveSide,balls:valid.balls,strikes:valid.strikes,pitches:valid.pitches,outsOnPlay:valid.outsOnPlay,advances:valid.advances,rbi:valid.rbi,rbiMode:valid.rbiMode});state.game.currentAtBat={balls:0,strikes:0,pitches:[],hitDirection:''};save();renderAll();
+  pushHistory();ScorekeeperCore.setPlateAppearance(state,target.slotIndex,target.paIndex,valid);ScorekeeperCore.upsertPlateAppearanceEvent(state,target.slotIndex,target.paIndex,{pitcherIndex:state.game.currentPitcherIndex,pitcherSide:defensiveSide,hitDirection:valid.hitDirection,balls:valid.balls,strikes:valid.strikes,pitches:valid.pitches,outsOnPlay:valid.outsOnPlay,advances:valid.advances,rbi:valid.rbi,rbiMode:valid.rbiMode});state.game.currentAtBat={balls:0,strikes:0,pitches:[],hitDirection:''};save();renderAll();
   const after=ScorekeeperCore.replayGameState(state,{side:state.activeSide});
   if(after.inningComplete){ScorekeeperCore.activateTeam(state,state.activeSide==='home'?'guest':'home');state.game.currentAtBat={balls:0,strikes:0,pitches:[],hitDirection:''};save();renderAll();}
 }
