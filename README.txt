@@ -25,9 +25,10 @@ v6.1 추가:
 - Guest / Home 점수 표시
 - 최근 12개 Play-by-Play 표시
 - Line Score 표시
-- Scorekeeper가 localStorage를 저장하면 Live 탭이 storage event + 750ms 확인으로 갱신
+- Scorekeeper가 localStorage와 Firebase Realtime Database에 저장하면 Live 화면이 실시간 갱신
 - Quick Scoring 패널에서 타석 결과를 빠르게 입력 가능
 - 빠른 입력이 주자 이동을 필요로 하면 자동으로 상세 입력창을 열어 보완 가능
+- Firebase Realtime Database 주소와 공개 테스트 규칙 설정이 필요
 
 현재 제한:
 - 아직 한 팀 Scoresheet 기반이라 완전한 Home/Away 양쪽 Game State는 아님

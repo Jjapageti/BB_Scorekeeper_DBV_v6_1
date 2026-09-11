@@ -128,4 +128,12 @@ function render(){
 function refreshIfChanged(){const raw=localStorage.getItem(STORAGE_KEY);if(raw!==lastRaw){lastRaw=raw;render();}}
 window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){lastRaw=e.newValue;render();}});
 lastRaw=localStorage.getItem(STORAGE_KEY);render();setInterval(refreshIfChanged,750);
+window.BBFirebaseSync?.subscribe(remoteState=>{
+  const next=JSON.stringify(remoteState);
+  if(next===lastRaw)return;
+  localStorage.setItem(STORAGE_KEY,next);
+  lastRaw=next;
+  state=ensureStateShape(remoteState);
+  render();
+});
 })();

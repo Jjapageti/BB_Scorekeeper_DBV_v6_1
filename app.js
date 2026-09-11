@@ -16,7 +16,7 @@ function loadState(){
     return loaded;
   }catch{return defaultState();}
 }
-function save(){sessionStorage.setItem(TAB_SIDE_KEY,state.activeSide);localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function save(){sessionStorage.setItem(TAB_SIDE_KEY,state.activeSide);localStorage.setItem(STORAGE_KEY,JSON.stringify(state));window.BBFirebaseSync?.saveState(state);}
 function downloadJson(){const payload={schemaVersion:'6.1',ruleProfile:RULE_PROFILE,game:state.game,lineScore:state.lineScore,teams:state.teams,slots:state.slots,pitchers:state.pitchers,catchers:state.catchers,events:[...(state.events||[])].sort((a,b)=>(Number(a.sequence)||0)-(Number(b.sequence)||0))};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`BB_Scorekeeper_${state.game.gameNo||state.game.date||'game'}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);}
 function pushHistory(){undoStack.push(deep(state));if(undoStack.length>100)undoStack.shift();redoStack=[];updateUndo();}
 function undo(){if(!undoStack.length)return;redoStack.push(deep(state));state=undoStack.pop();save();renderAll();updateUndo();}
@@ -296,4 +296,12 @@ $('#resultSelect').addEventListener('change',onResultChange);$('#rbiInput').addE
 $('#addInningSheetBtn').addEventListener('click',()=>{const current=Math.max(10,Number(state.game.scoreColumns)||10);if(current>=PA_COLUMNS){alert(`Maximal ${PA_COLUMNS} Innings können hinzugefügt werden.`);return;}pushHistory();state.game.scoreColumns=Math.min(PA_COLUMNS,current+10);save();renderAll();});
 $('#finishGameBtn').addEventListener('click',()=>{const reason=state.game.endReason||'completed';if(!confirm(`Spiel mit dem Grund „${reason}“ beenden?`))return;pushHistory();finishGame();});
 renderAll();updateUndo();setZoom(1);
+window.BBFirebaseSync?.subscribe(remoteState=>{
+  const activeSide=state.activeSide;
+  state=ensureStateShape(remoteState);
+  if(activeSide==='guest'||activeSide==='home')ScorekeeperCore.activateTeam(state,activeSide);
+  ScorekeeperCore.syncPlateAppearanceEvents(state);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  renderAll();
+});
 })();
