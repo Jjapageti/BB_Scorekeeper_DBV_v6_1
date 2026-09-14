@@ -1,9 +1,9 @@
 BB Scorekeeper DBV v6.1 - Local Live Prototype
 ================================================
 
-Node.js / npm 필요 없음.
+Node.js / npm werden nicht benötigt.
 
-실행:
+Start:
   cd "C:\Users\Seokhyun.Choi\Desktop\개인\BB_Scorekeeper_DBV_v6_1"
   py -m http.server 8000
 
@@ -13,32 +13,36 @@ Scorer:
 Live:
   http://localhost:8000/live.html
 
-또는 Scorer 상단의 ● LIVE 버튼을 누르면 새 탭으로 열립니다.
+Alternativ kann die Live-Seite über die Schaltfläche ● LIVE im Scorer
+in einem neuen Tab geöffnet werden.
 
-v6.1 추가:
-- 기존 v6 자동 타격통계 유지
-- Live 화면 추가
-- 현재 이닝 / TOP·BOTTOM 표시
-- 아웃카운트 표시
-- 현재 1B / 2B / 3B 주자 표시
-- 현재 타자 표시
-- Guest / Home 점수 표시
-- 최근 12개 Play-by-Play 표시
-- Line Score 표시
-- Scorekeeper가 localStorage와 Firebase Realtime Database에 저장하면 Live 화면이 실시간 갱신
-- Quick Scoring 패널에서 타석 결과를 빠르게 입력 가능
-- 빠른 입력이 주자 이동을 필요로 하면 자동으로 상세 입력창을 열어 보완 가능
-- Firebase Realtime Database 주소와 공개 테스트 규칙 설정이 필요
-- 2026 시즌 로스터는 BB_Baseball_Stats_DE의 데이터 동기화 후 자동 생성되어 선수 이름 자동완성에 사용
+v6.1:
+- Automatische Schlagstatistik aus v6 beibehalten
+- Live-Ansicht
+- Aktuelles Inning und TOP/BOTTOM
+- Auszahl
+- Aktuelle Läufer auf 1B, 2B und 3B
+- Aktueller Schlagmann
+- Guest-/Home-Spielstand
+- Letzte zwölf Spielzüge
+- Line Score
+- Live-Aktualisierung über localStorage und Firebase Realtime Database
+- Schnelleingabe für Plate-Appearance-Ergebnisse
+- Automatisches Öffnen der Detailansicht, wenn Läuferbewegungen erforderlich sind
+- Firebase Realtime Database und öffentliche Testregeln erforderlich
+- 2026er Kader werden nach der Datensynchronisierung von BB_Baseball_Stats_DE
+  automatisch erzeugt und für die Spielernamen-Autovervollständigung verwendet
 
-현재 제한:
-- 아직 한 팀 Scoresheet 기반이라 완전한 Home/Away 양쪽 Game State는 아님
-- 영상 Live 없음
-- 온라인 서버/WebSocket 없음 (같은 브라우저의 localhost용 prototype)
-- 투수 현재 상태는 아직 자동 추적하지 않음
+Aktuelle Einschränkungen:
+- Der Scoresheet basiert noch auf einer einzelnen Teamansicht und bildet den
+  vollständigen Home-/Away-Spielzustand noch nicht ab
+- Kein Video-Livebild
+- Kein Online-Server/WebSocket; lokaler localhost-Prototyp
+- Der aktuelle Pitcherstatus wird noch nicht automatisch verfolgt
 
-선수 이름 자동완성:
-  BB_Baseball_Stats_DE에서 `sync_data.py`를 실행하면 이 폴더의
-  `data/rosters-2026.json`이 갱신됩니다. Scorekeeper를 다시 열면
-  팀 이름에 맞는 2026 시즌 선수 이름이 스코어시트 입력창에 추천됩니다.
-  목록에 없는 신규 선수는 기존처럼 직접 입력할 수 있습니다.
+Spielernamen-Autovervollständigung:
+  Nach `sync_data.py` in BB_Baseball_Stats_DE wird
+  `data/rosters-2026.json` in diesem Ordner aktualisiert. Beim erneuten Öffnen
+  des Scorekeepers werden die Spielernamen der ausgewählten Mannschaft aus der
+  Saison 2026 vorgeschlagen. Nicht vorhandene Spieler können weiterhin
+  manuell eingegeben werden.

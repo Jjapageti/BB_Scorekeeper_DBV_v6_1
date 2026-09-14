@@ -33,7 +33,7 @@
 .field-cf{left:50%;top:0;transform:translateX(-50%)}
 .field-rf{right:0;top:8%}
 
-/* 문자중계처럼 점수판과 이닝별 이벤트를 우선 보여준다. */
+/* Prioritize the scoreboard and inning events like a text broadcast. */
 .live-shell{width:min(760px,100%);padding:12px 14px 28px}
 .live-shell{display:flex;flex-direction:column}
 .live-head{padding-bottom:10px}

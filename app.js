@@ -66,7 +66,7 @@ function refreshTeamSuggestions(){
   list.replaceChildren(...names.map(name=>{const option=document.createElement('option');option.value=name;return option;}));
   $$('.team-picker').forEach(select=>{
     const selected=state.game?.[select.dataset.teamPicker]||'';
-    select.replaceChildren(new Option('팀 선택', ''), ...names.map(name=>new Option(name,name)));
+    select.replaceChildren(new Option('Team auswählen', ''), ...names.map(name=>new Option(name,name)));
     select.value=names.includes(selected)?selected:'';
   });
 }
@@ -115,8 +115,8 @@ function makePlayerNameControl(slotIndex,playerIndex,player){
   if(!list){list=document.createElement('datalist');list.id=listId;document.body.appendChild(list);}
   const input=makeInput(player.name,v=>{player.name=v;savePlayerName(state.game?.[state.activeSide],v);refreshPlayerNameSuggestions();},'','name');
   input.setAttribute('list',listId);
-  input.placeholder='선수 이름 입력 또는 선택';
-  input.title='등록된 이름을 선택하거나 새 이름을 직접 입력할 수 있습니다.';
+  input.placeholder='Spielernamen eingeben oder auswählen';
+  input.title='Einen vorhandenen Namen auswählen oder einen neuen Namen eingeben.';
   wrap.appendChild(input);
   if(playerIndex>0){const del=document.createElement('button');del.type='button';del.className='mini-delete';del.textContent='×';del.title='Ersatzspieler löschen';del.onclick=e=>{e.stopPropagation();const linked=state.slots[slotIndex].plateAppearances.some(pa=>pa&&Number(pa.playerIndex)===playerIndex);if(linked){alert('Diesem Spieler sind Plate Appearances zugeordnet. Ändern oder löschen Sie diese zuerst.');return;}pushHistory();ScorekeeperCore.removePlayer(state,slotIndex,playerIndex);save();renderMain();};wrap.appendChild(del);}
   return wrap;
