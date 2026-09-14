@@ -4,6 +4,7 @@ const $=s=>document.querySelector(s);
 let lastRaw=null;
 let selectedInning=null;
 let followCurrent=true;
+let seasonRoster={teams:[]};
 
 function loadState(){
   try{
@@ -11,6 +12,29 @@ function loadState(){
     if(!raw)return ScorekeeperCore.defaultState();
     return ScorekeeperCore.ensureStateShape(JSON.parse(raw));
   }catch{return ScorekeeperCore.defaultState();}
+}
+function normalizeTeamName(name){return String(name||'').trim().toLocaleLowerCase();}
+async function loadSeasonRoster(){
+  try{
+    const response=await fetch('data/rosters-2026.json',{cache:'no-store'});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const roster=await response.json();
+    if(!Array.isArray(roster.teams))throw new Error('Invalid roster format');
+    seasonRoster=roster;
+  }catch(error){
+    console.warn('Live team logos could not be loaded:',error);
+  }
+}
+function teamLogo(name){
+  const key=normalizeTeamName(name);
+  return seasonRoster.teams.find(team=>normalizeTeamName(team.name)===key)?.logo_url||'';
+}
+function renderTeamLogo(id,name){
+  const image=$(id);
+  const url=teamLogo(name);
+  image.hidden=!url;
+  image.alt=url?`${name} logo`:'';
+  image.src=url||'';
 }
 function runnerText(r){if(!r)return'-';return [r.number?`#${r.number}`:'',r.name].filter(Boolean).join(' ');}
 function setBase(id,runner){
@@ -109,7 +133,7 @@ function renderInningSelector(current,plays){
 }
 function render(){
   const state=loadState();const live=ScorekeeperCore.buildLiveSnapshot(state);
-  $('#guestName').textContent=live.guest.name;$('#homeName').textContent=live.home.name;$('#guestRuns').textContent=String(live.guest.runs);$('#homeRuns').textContent=String(live.home.runs);
+  $('#guestName').textContent=live.guest.name;$('#homeName').textContent=live.home.name;renderTeamLogo('#guestLogo',live.guest.name);renderTeamLogo('#homeLogo',live.home.name);$('#guestRuns').textContent=String(live.guest.runs);$('#homeRuns').textContent=String(live.home.runs);
   $('#liveHalf').textContent=live.half;$('#liveInning').textContent=`${live.inning||1}. Inning`;renderOuts(live.outs);
   setBase('#base1',live.bases[1]);setBase('#base2',live.bases[2]);setBase('#base3',live.bases[3]);
   const b=live.currentBatter;$('#liveBatter').textContent=`Order ${b.order} · ${[b.number?`#${b.number}`:'',b.name,b.position?`(${b.position})`:'' ].filter(Boolean).join(' ')}`;
@@ -127,7 +151,7 @@ function render(){
 }
 function refreshIfChanged(){const raw=localStorage.getItem(STORAGE_KEY);if(raw!==lastRaw){lastRaw=raw;render();}}
 window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){lastRaw=e.newValue;render();}});
-lastRaw=localStorage.getItem(STORAGE_KEY);render();setInterval(refreshIfChanged,750);
+lastRaw=localStorage.getItem(STORAGE_KEY);loadSeasonRoster().then(()=>render());setInterval(refreshIfChanged,750);
 let stopRemoteSubscription=null;
 function subscribeRemoteState(){
   if(stopRemoteSubscription)return;

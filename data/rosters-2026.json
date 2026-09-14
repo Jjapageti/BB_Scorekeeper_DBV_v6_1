@@ -1,0 +1,1467 @@
+{
+  "schema_version": 1,
+  "season": 2026,
+  "generated_at": "2026-09-14T13:21:22.610651+00:00",
+  "source_files": [
+    "C:\\Users\\Seokhyun.Choi\\Desktop\\개인\\BB_Baseball_Stats_DE\\bsm_league_data\\verbandsliga_2026\\combined.json",
+    "C:\\Users\\Seokhyun.Choi\\Desktop\\개인\\BB_Baseball_Stats_DE\\bsm_league_data\\landesliga_2026\\combined.json"
+  ],
+  "teams": [
+    {
+      "id": "46101",
+      "name": "Challengers",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/486/thumb/challengers_Logo_NEW.jpg?1587225071",
+      "players": [
+        {
+          "id": "98381",
+          "name": "Alexander Goldap"
+        },
+        {
+          "id": "85971",
+          "name": "Alexander Szemeitat"
+        },
+        {
+          "id": "61448",
+          "name": "Carlotta Bahls"
+        },
+        {
+          "id": "83576",
+          "name": "Cary Nathenson"
+        },
+        {
+          "id": "73813",
+          "name": "David Sieblist"
+        },
+        {
+          "id": "83574",
+          "name": "Emil Ciesielski"
+        },
+        {
+          "id": "85531",
+          "name": "Ercan Coskuner"
+        },
+        {
+          "id": "91308",
+          "name": "Jan-Ole Schack"
+        },
+        {
+          "id": "1849",
+          "name": "Jonas Baur"
+        },
+        {
+          "id": "93487",
+          "name": "Jonas Lobrecht"
+        },
+        {
+          "id": "95238",
+          "name": "Joram Schön"
+        },
+        {
+          "id": "94323",
+          "name": "Jose Aturo Aguilar Jimenez"
+        },
+        {
+          "id": "95239",
+          "name": "Luke Bruewer"
+        },
+        {
+          "id": "92910",
+          "name": "Naif Al-Mulla"
+        },
+        {
+          "id": "8692",
+          "name": "Nicolas Fehr"
+        },
+        {
+          "id": "56884",
+          "name": "Noah Jens"
+        },
+        {
+          "id": "98316",
+          "name": "Patrick Loyall"
+        },
+        {
+          "id": "69241",
+          "name": "Robert Kovacevic"
+        },
+        {
+          "id": "42212",
+          "name": "Robert Zimanji"
+        },
+        {
+          "id": "81246",
+          "name": "Victor Gabriel Geronimo de los Santos"
+        }
+      ]
+    },
+    {
+      "id": "46095",
+      "name": "Eagles",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/603/thumb/eagles-mainlogo.png?1587225082",
+      "players": [
+        {
+          "id": "63561",
+          "name": "Anton Strohe"
+        },
+        {
+          "id": "80540",
+          "name": "Ben Moryson"
+        },
+        {
+          "id": "96669",
+          "name": "Christian Sobottka"
+        },
+        {
+          "id": "96616",
+          "name": "David Dannenberg"
+        },
+        {
+          "id": "14681",
+          "name": "David Hille"
+        },
+        {
+          "id": "80543",
+          "name": "Felix Mangelberger"
+        },
+        {
+          "id": "70612",
+          "name": "Jack Leon Wasielewski"
+        },
+        {
+          "id": "71104",
+          "name": "Jeffrey Mainitz"
+        },
+        {
+          "id": "93880",
+          "name": "Joao Carvalho"
+        },
+        {
+          "id": "71250",
+          "name": "Jonah Radzymski"
+        },
+        {
+          "id": "71909",
+          "name": "Juan Bongé"
+        },
+        {
+          "id": "91732",
+          "name": "Kilian Reinert"
+        },
+        {
+          "id": "86516",
+          "name": "Luca Bordihn"
+        },
+        {
+          "id": "60947",
+          "name": "Marvin Pfeiffer"
+        },
+        {
+          "id": "71813",
+          "name": "Maximilian Zeilhofer"
+        },
+        {
+          "id": "65754",
+          "name": "Mitchell Löprick"
+        },
+        {
+          "id": "60954",
+          "name": "Nicolai Dietrich"
+        },
+        {
+          "id": "56640",
+          "name": "Sean Pfeiffer"
+        },
+        {
+          "id": "80535",
+          "name": "Selim Kuru"
+        },
+        {
+          "id": "78466",
+          "name": "Sinan Kuru"
+        },
+        {
+          "id": "78415",
+          "name": "Yannick Grimm"
+        }
+      ]
+    },
+    {
+      "id": "46103",
+      "name": "Flamingos 2",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/604/thumb/flalogo_big_freigestellt.png?1625524563",
+      "players": [
+        {
+          "id": "82282",
+          "name": "Cedric Ermeling"
+        },
+        {
+          "id": "30350",
+          "name": "Dominique Rocek"
+        },
+        {
+          "id": "65402",
+          "name": "Felix Kunisch"
+        },
+        {
+          "id": "62957",
+          "name": "Jason Hosnedl"
+        },
+        {
+          "id": "92709",
+          "name": "Jonas Wolf"
+        },
+        {
+          "id": "20345",
+          "name": "Karel Kucera"
+        },
+        {
+          "id": "30351",
+          "name": "Kolja Rocek"
+        },
+        {
+          "id": "31522",
+          "name": "Marvin Sander"
+        },
+        {
+          "id": "98069",
+          "name": "Matthew Pearn"
+        },
+        {
+          "id": "49067",
+          "name": "Max Podszus"
+        },
+        {
+          "id": "4786",
+          "name": "Michael Burckhard"
+        },
+        {
+          "id": "65362",
+          "name": "Miguel Altair Angeles Meyhöfer"
+        },
+        {
+          "id": "67470",
+          "name": "Moritz Kucera"
+        },
+        {
+          "id": "83983",
+          "name": "Neo-Maxim Lemm"
+        },
+        {
+          "id": "70441",
+          "name": "Noah Skibo"
+        },
+        {
+          "id": "97701",
+          "name": "Oscar Peter Bergstrand"
+        },
+        {
+          "id": "37778",
+          "name": "Philip Thomas"
+        },
+        {
+          "id": "80280",
+          "name": "Saifali Mian"
+        },
+        {
+          "id": "50043",
+          "name": "Steve Hosnedl"
+        },
+        {
+          "id": "95110",
+          "name": "Zacharias Arash Ghavami"
+        }
+      ]
+    },
+    {
+      "id": "46088",
+      "name": "Porcupines",
+      "league": "Verbandsliga Baseball",
+      "logo_url": "",
+      "players": [
+        {
+          "id": "81462",
+          "name": "Adrian Holz"
+        },
+        {
+          "id": "11455",
+          "name": "Christian Göttlicher"
+        },
+        {
+          "id": "10992",
+          "name": "Christopher Glania"
+        },
+        {
+          "id": "55131",
+          "name": "Curt Freyhofer"
+        },
+        {
+          "id": "83587",
+          "name": "Frank Mello Morales"
+        },
+        {
+          "id": "25365",
+          "name": "Jakob Müller"
+        },
+        {
+          "id": "82257",
+          "name": "John-Michael Kibrick"
+        },
+        {
+          "id": "86754",
+          "name": "Joshua Berger"
+        },
+        {
+          "id": "35154",
+          "name": "Klemens Sievers"
+        },
+        {
+          "id": "86758",
+          "name": "Leonard Wieland"
+        },
+        {
+          "id": "43643",
+          "name": "Marvin Laß"
+        },
+        {
+          "id": "70427",
+          "name": "Matthias Gerbitz"
+        },
+        {
+          "id": "88339",
+          "name": "Mika Martius"
+        },
+        {
+          "id": "71156",
+          "name": "Pascal Bernier"
+        },
+        {
+          "id": "65206",
+          "name": "Patrick Niestroj"
+        },
+        {
+          "id": "86757",
+          "name": "Richard Wieland"
+        },
+        {
+          "id": "76948",
+          "name": "Sven Fast"
+        },
+        {
+          "id": "2715",
+          "name": "Thorsten Beyer"
+        },
+        {
+          "id": "90983",
+          "name": "Torsten Schütt"
+        }
+      ]
+    },
+    {
+      "id": "46102",
+      "name": "Porcupines 2",
+      "league": "Landesliga Baseball",
+      "logo_url": "",
+      "players": [
+        {
+          "id": "62514",
+          "name": "Alexander Beyer"
+        },
+        {
+          "id": "49107",
+          "name": "Bastian Hauf"
+        },
+        {
+          "id": "94730",
+          "name": "Jeein Kim"
+        },
+        {
+          "id": "82257",
+          "name": "John-Michael Kibrick"
+        },
+        {
+          "id": "91957",
+          "name": "Jonathan Stehfest"
+        },
+        {
+          "id": "86754",
+          "name": "Joshua Berger"
+        },
+        {
+          "id": "91949",
+          "name": "Julius Neubauer"
+        },
+        {
+          "id": "87722",
+          "name": "Lasse Schmitz-Justen"
+        },
+        {
+          "id": "83842",
+          "name": "Lennart Alexander Wedig"
+        },
+        {
+          "id": "86758",
+          "name": "Leonard Wieland"
+        },
+        {
+          "id": "89622",
+          "name": "Marco Laue"
+        },
+        {
+          "id": "91945",
+          "name": "Marco Stelter"
+        },
+        {
+          "id": "94484",
+          "name": "Marius Breker"
+        },
+        {
+          "id": "70427",
+          "name": "Matthias Gerbitz"
+        },
+        {
+          "id": "88339",
+          "name": "Mika Martius"
+        },
+        {
+          "id": "92055",
+          "name": "Niklas Bier"
+        },
+        {
+          "id": "71156",
+          "name": "Pascal Bernier"
+        },
+        {
+          "id": "86757",
+          "name": "Richard Wieland"
+        },
+        {
+          "id": "76948",
+          "name": "Sven Fast"
+        },
+        {
+          "id": "80084",
+          "name": "Sören Mühle"
+        },
+        {
+          "id": "2715",
+          "name": "Thorsten Beyer"
+        },
+        {
+          "id": "69997",
+          "name": "Tobias Wiegmann"
+        },
+        {
+          "id": "90983",
+          "name": "Torsten Schütt"
+        }
+      ]
+    },
+    {
+      "id": "46098",
+      "name": "Roadrunners 2",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/502/thumb/path35.png?1587225073",
+      "players": [
+        {
+          "id": "83319",
+          "name": "Austin Davis Kotting"
+        },
+        {
+          "id": "92774",
+          "name": "Emmanuel Bissama"
+        },
+        {
+          "id": "97228",
+          "name": "Erik Avakjan"
+        },
+        {
+          "id": "7385",
+          "name": "Ernesto Duran Luis"
+        },
+        {
+          "id": "33460",
+          "name": "Grigori Scholz"
+        },
+        {
+          "id": "92344",
+          "name": "Hasan Daniel Chalghin"
+        },
+        {
+          "id": "5026",
+          "name": "Hector Raul Cabrera Baro"
+        },
+        {
+          "id": "61899",
+          "name": "Jean Reichert"
+        },
+        {
+          "id": "72242",
+          "name": "Josh Glaubitz"
+        },
+        {
+          "id": "61908",
+          "name": "Keanu Seidel"
+        },
+        {
+          "id": "97227",
+          "name": "Luo Zhaotian"
+        },
+        {
+          "id": "413",
+          "name": "Masiar Aliabbassi"
+        },
+        {
+          "id": "6151",
+          "name": "Michael De Gelmini"
+        },
+        {
+          "id": "72191",
+          "name": "Moritz Heinzelmann"
+        },
+        {
+          "id": "97226",
+          "name": "Nick Unglaube"
+        },
+        {
+          "id": "88048",
+          "name": "Owen Michael Jones"
+        },
+        {
+          "id": "72258",
+          "name": "Paul Strehlow"
+        },
+        {
+          "id": "28005",
+          "name": "Peter Pfennig"
+        },
+        {
+          "id": "66012",
+          "name": "Phillip Schmidt"
+        },
+        {
+          "id": "72189",
+          "name": "Stig Glaubitz"
+        },
+        {
+          "id": "34727",
+          "name": "Sven Seidel"
+        }
+      ]
+    },
+    {
+      "id": "46094",
+      "name": "Roosters",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/491/thumb/logo-baseballworld-website.png?1587225072",
+      "players": [
+        {
+          "id": "56769",
+          "name": "Christian  Tadeus Lasek"
+        },
+        {
+          "id": "63544",
+          "name": "Christopher Hodik"
+        },
+        {
+          "id": "44757",
+          "name": "Christopher Kühl"
+        },
+        {
+          "id": "21236",
+          "name": "David Latt"
+        },
+        {
+          "id": "60079",
+          "name": "Hannes Röh"
+        },
+        {
+          "id": "16839",
+          "name": "Ive Joswiak"
+        },
+        {
+          "id": "84655",
+          "name": "Jamiro Treu"
+        },
+        {
+          "id": "57803",
+          "name": "Leon Maximilian Giebecke"
+        },
+        {
+          "id": "80561",
+          "name": "Luke Regorz"
+        },
+        {
+          "id": "72094",
+          "name": "Marie Witte"
+        },
+        {
+          "id": "56792",
+          "name": "Martin Steiner"
+        },
+        {
+          "id": "55028",
+          "name": "Nadja Stein"
+        },
+        {
+          "id": "12613",
+          "name": "Patrick Haericke"
+        },
+        {
+          "id": "94021",
+          "name": "Sascha Gottwald"
+        },
+        {
+          "id": "88805",
+          "name": "Thomas Pisula"
+        },
+        {
+          "id": "89630",
+          "name": "Tim Wildenhayn"
+        }
+      ]
+    },
+    {
+      "id": "46086",
+      "name": "Skylarks 2",
+      "league": "Verbandsliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/485/thumb/Skylarks_Logo-Rondell_200px.png?1608387861",
+      "players": [
+        {
+          "id": "31055",
+          "name": "Ake David Rudolf"
+        },
+        {
+          "id": "94932",
+          "name": "Alex Zhitnik"
+        },
+        {
+          "id": "73605",
+          "name": "Anthony Garland"
+        },
+        {
+          "id": "73083",
+          "name": "Anton Baker"
+        },
+        {
+          "id": "81219",
+          "name": "Benjamin Bloch"
+        },
+        {
+          "id": "76222",
+          "name": "David Battefeld"
+        },
+        {
+          "id": "71036",
+          "name": "Duc Khang Mai"
+        },
+        {
+          "id": "82321",
+          "name": "Edouard Augustins"
+        },
+        {
+          "id": "97726",
+          "name": "Henry Suarez"
+        },
+        {
+          "id": "82283",
+          "name": "Jaiden Stevens Vohmann"
+        },
+        {
+          "id": "88300",
+          "name": "Jannis Bloch"
+        },
+        {
+          "id": "75411",
+          "name": "Jonas Tochatschek"
+        },
+        {
+          "id": "43279",
+          "name": "Jürgen von Dombrowsky"
+        },
+        {
+          "id": "97814",
+          "name": "Kei Takahashi"
+        },
+        {
+          "id": "86258",
+          "name": "Kyota Parkin"
+        },
+        {
+          "id": "46235",
+          "name": "Lars Graetsch"
+        },
+        {
+          "id": "75415",
+          "name": "Levin Tochatschek"
+        },
+        {
+          "id": "80842",
+          "name": "Lian Sprenger"
+        },
+        {
+          "id": "91045",
+          "name": "Rebecca Emily Cottrell"
+        },
+        {
+          "id": "43448",
+          "name": "Rodney Jones"
+        },
+        {
+          "id": "89745",
+          "name": "Samuel Campisano"
+        },
+        {
+          "id": "94933",
+          "name": "Sebastian Rosemont"
+        },
+        {
+          "id": "97078",
+          "name": "Sebastian von Drateln"
+        },
+        {
+          "id": "59738",
+          "name": "Syan Tournoux"
+        },
+        {
+          "id": "85677",
+          "name": "Timofei Filippov"
+        }
+      ]
+    },
+    {
+      "id": "46097",
+      "name": "Skylarks 3",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/485/thumb/Skylarks_Logo-Rondell_200px.png?1608387861",
+      "players": [
+        {
+          "id": "81773",
+          "name": "Alberto Moscatelli"
+        },
+        {
+          "id": "90549",
+          "name": "Andreas Linkamp"
+        },
+        {
+          "id": "49114",
+          "name": "Bastian Pabst"
+        },
+        {
+          "id": "93454",
+          "name": "Freddy Miguel Fernandez Gamboa"
+        },
+        {
+          "id": "95459",
+          "name": "Gabriel Louis Maslen"
+        },
+        {
+          "id": "90538",
+          "name": "Jonathon Sparkman"
+        },
+        {
+          "id": "85898",
+          "name": "Juan Sebastian Barreto"
+        },
+        {
+          "id": "90537",
+          "name": "Justin Beard"
+        },
+        {
+          "id": "90364",
+          "name": "Justin Spomer"
+        },
+        {
+          "id": "85897",
+          "name": "Kevin Blatz"
+        },
+        {
+          "id": "89135",
+          "name": "Leonhard Winterer"
+        },
+        {
+          "id": "37925",
+          "name": "Mani Tilgner"
+        },
+        {
+          "id": "73886",
+          "name": "Mathias Uhlenbrock"
+        },
+        {
+          "id": "93317",
+          "name": "MIchael Schmitt Funke"
+        },
+        {
+          "id": "94872",
+          "name": "Milosz Zarzycki"
+        },
+        {
+          "id": "90365",
+          "name": "Nathaniel Laurin"
+        },
+        {
+          "id": "90042",
+          "name": "Paul John Sorrell"
+        },
+        {
+          "id": "91045",
+          "name": "Rebecca Emily Cottrell"
+        },
+        {
+          "id": "84972",
+          "name": "Thomas Hintze"
+        }
+      ]
+    },
+    {
+      "id": "46096",
+      "name": "Sliders",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/495/thumb/Logo-Berlin-Sliders.png?1636040006",
+      "players": [
+        {
+          "id": "4500",
+          "name": "Alexander Brüssow"
+        },
+        {
+          "id": "93159",
+          "name": "Christian Agustin Arroyo Schmidt"
+        },
+        {
+          "id": "65836",
+          "name": "Eladio Alejandro Martinez Pina"
+        },
+        {
+          "id": "85716",
+          "name": "Fabian Boldt"
+        },
+        {
+          "id": "26185",
+          "name": "Jon Nickol"
+        },
+        {
+          "id": "45355",
+          "name": "Jonas Küster"
+        },
+        {
+          "id": "60539",
+          "name": "Julian Kaiser-Renker"
+        },
+        {
+          "id": "62140",
+          "name": "Mark Chambers"
+        },
+        {
+          "id": "62339",
+          "name": "Markus Mueller-Schikora"
+        },
+        {
+          "id": "63903",
+          "name": "Matthias Hendel"
+        },
+        {
+          "id": "34496",
+          "name": "Maxim Schweigert"
+        },
+        {
+          "id": "63514",
+          "name": "Michael Herrmann"
+        },
+        {
+          "id": "49394",
+          "name": "Nils Jensen"
+        },
+        {
+          "id": "81236",
+          "name": "Noah Geronimo de los Santos"
+        },
+        {
+          "id": "65417",
+          "name": "Ole Voß"
+        },
+        {
+          "id": "79187",
+          "name": "Phillip Eggert"
+        },
+        {
+          "id": "9841",
+          "name": "Sascha Friesike"
+        }
+      ]
+    },
+    {
+      "id": "46084",
+      "name": "Sluggers",
+      "league": "Verbandsliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/492/thumb/SluggersLogo2011Fin_dklrot_kl.png?1587225072",
+      "players": [
+        {
+          "id": "54957",
+          "name": "Adrian Schneider"
+        },
+        {
+          "id": "71980",
+          "name": "Christopher Blaszczyk"
+        },
+        {
+          "id": "73479",
+          "name": "Domenik Nischik"
+        },
+        {
+          "id": "70073",
+          "name": "Dominik Wasielewski"
+        },
+        {
+          "id": "94803",
+          "name": "Jakob Braunisch"
+        },
+        {
+          "id": "41400",
+          "name": "Jeffrey Wolburg"
+        },
+        {
+          "id": "51617",
+          "name": "Jonas Nickel"
+        },
+        {
+          "id": "58011",
+          "name": "Junior Ventura"
+        },
+        {
+          "id": "57806",
+          "name": "Kay Simon Banik"
+        },
+        {
+          "id": "63446",
+          "name": "Leon Kaufmannn"
+        },
+        {
+          "id": "80558",
+          "name": "Leonie Milhahn"
+        },
+        {
+          "id": "60834",
+          "name": "Mags Meschke"
+        },
+        {
+          "id": "45772",
+          "name": "Marvin Eichhorn"
+        },
+        {
+          "id": "54958",
+          "name": "Marvin Schneider"
+        },
+        {
+          "id": "61760",
+          "name": "Maurice Jordan Dietrich"
+        },
+        {
+          "id": "69791",
+          "name": "Maximilian Krause"
+        },
+        {
+          "id": "91383",
+          "name": "Mirza Mehmedovic"
+        },
+        {
+          "id": "80081",
+          "name": "Seokhyun Choi"
+        },
+        {
+          "id": "62537",
+          "name": "Simon Sven Fulber"
+        },
+        {
+          "id": "67468",
+          "name": "Tim Junker"
+        }
+      ]
+    },
+    {
+      "id": "46099",
+      "name": "Sluggers 2",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/492/thumb/SluggersLogo2011Fin_dklrot_kl.png?1587225072",
+      "players": [
+        {
+          "id": "94794",
+          "name": "Alexander Hans"
+        },
+        {
+          "id": "96912",
+          "name": "Alexander Meier"
+        },
+        {
+          "id": "71980",
+          "name": "Christopher Blaszczyk"
+        },
+        {
+          "id": "71981",
+          "name": "Dominic Heintze"
+        },
+        {
+          "id": "70073",
+          "name": "Dominik Wasielewski"
+        },
+        {
+          "id": "97366",
+          "name": "Edwin Cespedes"
+        },
+        {
+          "id": "83911",
+          "name": "Ejona Gashi"
+        },
+        {
+          "id": "94803",
+          "name": "Jakob Braunisch"
+        },
+        {
+          "id": "96910",
+          "name": "Jonas Kiehne"
+        },
+        {
+          "id": "97387",
+          "name": "Jorge Pineda Arcia"
+        },
+        {
+          "id": "97383",
+          "name": "Leon Rothe"
+        },
+        {
+          "id": "80558",
+          "name": "Leonie Milhahn"
+        },
+        {
+          "id": "60834",
+          "name": "Mags Meschke"
+        },
+        {
+          "id": "82877",
+          "name": "Mario Kiehn"
+        },
+        {
+          "id": "61760",
+          "name": "Maurice Jordan Dietrich"
+        },
+        {
+          "id": "69791",
+          "name": "Maximilian Krause"
+        },
+        {
+          "id": "91383",
+          "name": "Mirza Mehmedovic"
+        },
+        {
+          "id": "81117",
+          "name": "Niek Schulz"
+        },
+        {
+          "id": "84983",
+          "name": "Oliver Yap"
+        },
+        {
+          "id": "80081",
+          "name": "Seokhyun Choi"
+        },
+        {
+          "id": "67468",
+          "name": "Tim Junker"
+        },
+        {
+          "id": "66244",
+          "name": "Ulf Brauer"
+        },
+        {
+          "id": "6683",
+          "name": "Ulf Dietrich"
+        },
+        {
+          "id": "65745",
+          "name": "Yassin Ismaiel"
+        }
+      ]
+    },
+    {
+      "id": "46087",
+      "name": "Wallbreakers",
+      "league": "Verbandsliga Baseball",
+      "logo_url": "",
+      "players": [
+        {
+          "id": "98292",
+          "name": "Aiden Johann Goller"
+        },
+        {
+          "id": "71511",
+          "name": "Benjamin Grzeganek"
+        },
+        {
+          "id": "55719",
+          "name": "Christian Kellner"
+        },
+        {
+          "id": "94084",
+          "name": "Christian Klötzer"
+        },
+        {
+          "id": "19066",
+          "name": "Daniel Kolb"
+        },
+        {
+          "id": "10863",
+          "name": "Dominik Gibbons Reyes"
+        },
+        {
+          "id": "89483",
+          "name": "Edgar Alejandro Caripe Salazar"
+        },
+        {
+          "id": "85188",
+          "name": "Eduardo Marquez"
+        },
+        {
+          "id": "95003",
+          "name": "Ernesto Abraham Rodriguez Garcia"
+        },
+        {
+          "id": "84401",
+          "name": "Erwin Ramirez"
+        },
+        {
+          "id": "97445",
+          "name": "Geronimo Ricardo Alcala Reyes"
+        },
+        {
+          "id": "87181",
+          "name": "Isidro Ramirez"
+        },
+        {
+          "id": "84408",
+          "name": "Ivan de Jesus Yanez"
+        },
+        {
+          "id": "92355",
+          "name": "José Alejandro Vázquez"
+        },
+        {
+          "id": "96177",
+          "name": "José Efraín Monzón Romero"
+        },
+        {
+          "id": "71793",
+          "name": "Lucas Kuttner"
+        },
+        {
+          "id": "46868",
+          "name": "Lukas Metz"
+        },
+        {
+          "id": "95748",
+          "name": "Manuel José Jiménez Salas"
+        },
+        {
+          "id": "48525",
+          "name": "Martin Schmid"
+        },
+        {
+          "id": "95093",
+          "name": "Michael Brooks"
+        },
+        {
+          "id": "96671",
+          "name": "Pascal Ebert"
+        },
+        {
+          "id": "89485",
+          "name": "Philip Dockhorn"
+        },
+        {
+          "id": "61159",
+          "name": "Philipp Kuttner"
+        },
+        {
+          "id": "97444",
+          "name": "Phill Rodriguez"
+        },
+        {
+          "id": "98677",
+          "name": "Rafael de Jésus Yanez"
+        },
+        {
+          "id": "6300",
+          "name": "Robin Deising"
+        },
+        {
+          "id": "79727",
+          "name": "Sebastian Binek"
+        },
+        {
+          "id": "77173",
+          "name": "Solo Diaz"
+        },
+        {
+          "id": "97598",
+          "name": "Thayleer Monzon Escobar"
+        },
+        {
+          "id": "75397",
+          "name": "Thomas Schindler"
+        }
+      ]
+    },
+    {
+      "id": "46085",
+      "name": "Wizards",
+      "league": "Verbandsliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/494/thumb/Wizards-Logo-200x200.png?1741764774",
+      "players": [
+        {
+          "id": "75142",
+          "name": "Anton Wagner"
+        },
+        {
+          "id": "79643",
+          "name": "Ayden Leonard Purrington"
+        },
+        {
+          "id": "80937",
+          "name": "Ben Jonathan Kampf"
+        },
+        {
+          "id": "83602",
+          "name": "Egmont Gösche"
+        },
+        {
+          "id": "80023",
+          "name": "Finn Rechlin"
+        },
+        {
+          "id": "83614",
+          "name": "George Simon Takis"
+        },
+        {
+          "id": "40451",
+          "name": "Harald Werner"
+        },
+        {
+          "id": "73795",
+          "name": "Jamie Bongé"
+        },
+        {
+          "id": "3701",
+          "name": "Jan Both"
+        },
+        {
+          "id": "83943",
+          "name": "Julian Kentaro Yasuda"
+        },
+        {
+          "id": "69901",
+          "name": "Justus Jaeger"
+        },
+        {
+          "id": "65830",
+          "name": "Kenny Norgren"
+        },
+        {
+          "id": "80873",
+          "name": "Levi Schlehofer"
+        },
+        {
+          "id": "62250",
+          "name": "Liam Sullivan"
+        },
+        {
+          "id": "84769",
+          "name": "Linus Meesch"
+        },
+        {
+          "id": "69902",
+          "name": "Lucius Jaeger"
+        },
+        {
+          "id": "20526",
+          "name": "Maximilian Kulecki"
+        },
+        {
+          "id": "80875",
+          "name": "Nicolas Voegler"
+        },
+        {
+          "id": "77958",
+          "name": "Noah Gongoll"
+        },
+        {
+          "id": "82461",
+          "name": "Noah Pellatz"
+        },
+        {
+          "id": "84203",
+          "name": "Simon Groß"
+        },
+        {
+          "id": "80814",
+          "name": "Tobin Willms"
+        },
+        {
+          "id": "72926",
+          "name": "Tom Hendrik Moryson"
+        }
+      ]
+    },
+    {
+      "id": "46100",
+      "name": "Wizards 2",
+      "league": "Landesliga Baseball",
+      "logo_url": "https://bsm.baseball-softball.de/system/clubs/logos/000/000/494/thumb/Wizards-Logo-200x200.png?1741764774",
+      "players": [
+        {
+          "id": "58928",
+          "name": "Alex Richard DeAtley"
+        },
+        {
+          "id": "75142",
+          "name": "Anton Wagner"
+        },
+        {
+          "id": "79643",
+          "name": "Ayden Leonard Purrington"
+        },
+        {
+          "id": "80937",
+          "name": "Ben Jonathan Kampf"
+        },
+        {
+          "id": "55346",
+          "name": "Calvin Radtke"
+        },
+        {
+          "id": "90118",
+          "name": "Chien-Tseng Kuo"
+        },
+        {
+          "id": "59070",
+          "name": "Emre Koç"
+        },
+        {
+          "id": "93237",
+          "name": "Fernando Baptista"
+        },
+        {
+          "id": "97099",
+          "name": "Florian Witusch"
+        },
+        {
+          "id": "96595",
+          "name": "Frank Metzker"
+        },
+        {
+          "id": "83614",
+          "name": "George Simon Takis"
+        },
+        {
+          "id": "46997",
+          "name": "Gregor DuBuclet"
+        },
+        {
+          "id": "40451",
+          "name": "Harald Werner"
+        },
+        {
+          "id": "73795",
+          "name": "Jamie Bongé"
+        },
+        {
+          "id": "87957",
+          "name": "Jamie Sullivan"
+        },
+        {
+          "id": "30167",
+          "name": "John Rielo"
+        },
+        {
+          "id": "65875",
+          "name": "Joseph Hoedt"
+        },
+        {
+          "id": "95528",
+          "name": "Junseok Won"
+        },
+        {
+          "id": "82459",
+          "name": "Kevin Bäthge"
+        },
+        {
+          "id": "80873",
+          "name": "Levi Schlehofer"
+        },
+        {
+          "id": "62250",
+          "name": "Liam Sullivan"
+        },
+        {
+          "id": "84769",
+          "name": "Linus Meesch"
+        },
+        {
+          "id": "20526",
+          "name": "Maximilian Kulecki"
+        },
+        {
+          "id": "85289",
+          "name": "Nicolas Will"
+        },
+        {
+          "id": "51673",
+          "name": "Noah Briggs"
+        },
+        {
+          "id": "82461",
+          "name": "Noah Pellatz"
+        },
+        {
+          "id": "97015",
+          "name": "Paul Boultwood"
+        },
+        {
+          "id": "82494",
+          "name": "Paul Holz"
+        },
+        {
+          "id": "84203",
+          "name": "Simon Groß"
+        },
+        {
+          "id": "65919",
+          "name": "Til Hörmann"
+        },
+        {
+          "id": "8705",
+          "name": "Timo Feid"
+        },
+        {
+          "id": "90736",
+          "name": "Tobias Holz"
+        },
+        {
+          "id": "80814",
+          "name": "Tobin Willms"
+        },
+        {
+          "id": "72926",
+          "name": "Tom Hendrik Moryson"
+        },
+        {
+          "id": "98356",
+          "name": "Tom Luca Zwaldo"
+        },
+        {
+          "id": "17255",
+          "name": "Yuima Oliver Kaneko"
+        }
+      ]
+    }
+  ]
+}

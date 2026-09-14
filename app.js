@@ -1,10 +1,12 @@
 (()=>{'use strict';
 const STORAGE_KEY='bb-scorekeeper-dbv-2024-v8';
 const TAB_SIDE_KEY='bb-scorekeeper-active-side';
+const PLAYER_NAME_ROSTER_KEY='bb-scorekeeper-player-names-v1';
+const SEASON_ROSTER_URL='data/rosters-2026.json';
 const LEGACY_KEYS=['bb-scorekeeper-dbv-2024-v5-1'];
 const {RULE_PROFILE,SLOT_COUNT,PA_COLUMNS,BATTER_STATS,PITCHER_STATS,PITCHER_FIELDS,PLAYER_FIELDS,defaultState,defaultPlateAppearance,ensureStateShape}=ScorekeeperCore;
 const resultDefaults={'1B':[1,'1B'],'2B':[2,'2B'],'3B':[3,'3B'],HR:[4,'HR'],BB:[1,'BB'],IBB:[1,'IBB'],HBP:[1,'HBP'],K:[0,'K'],GO:[0,'6-3'],FO:[0,'F8'],LO:[0,'L6'],FC:[1,'FC'],E:[1,'E6'],SF:[0,'SF8'],SH:[0,'SH']};
-let state=loadState();ScorekeeperCore.syncPlateAppearanceEvents(state);let undoStack=[],redoStack=[],activeCell=null,activeEventEditId=null,zoom=1,rbiManualTouched=false,pendingQuickResult='',lastQuickDirectionPoint=null,lastQuickDirection='';
+let state=loadState();let seasonRoster={teams:[]};ScorekeeperCore.syncPlateAppearanceEvents(state);let undoStack=[],redoStack=[],activeCell=null,activeEventEditId=null,zoom=1,rbiManualTouched=false,pendingQuickResult='',lastQuickDirectionPoint=null,lastQuickDirection='';
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s)),deep=v=>JSON.parse(JSON.stringify(v));
 
 function loadState(){
@@ -17,6 +19,76 @@ function loadState(){
   }catch{return defaultState();}
 }
 function save(){sessionStorage.setItem(TAB_SIDE_KEY,state.activeSide);localStorage.setItem(STORAGE_KEY,JSON.stringify(state));window.BBFirebaseSync?.saveState(state);}
+function normalizeTeamName(name){return String(name||'').trim().toLocaleLowerCase();}
+function loadPlayerNameRoster(){
+  const raw=localStorage.getItem(PLAYER_NAME_ROSTER_KEY);
+  if(!raw)return {};
+  try{
+    const roster=JSON.parse(raw);
+    return roster&&typeof roster==='object'&&!Array.isArray(roster)?roster:{};
+  }catch(error){
+    console.warn('Saved player name roster could not be read:',error);
+    return {};
+  }
+}
+function savePlayerName(teamName,name){
+  const cleanName=String(name||'').trim();
+  const teamKey=normalizeTeamName(teamName);
+  if(!cleanName||!teamKey)return;
+  const roster=loadPlayerNameRoster();
+  const names=Array.isArray(roster[teamKey])?roster[teamKey]:[];
+  if(!names.some(existing=>existing.localeCompare(cleanName,undefined,{sensitivity:'accent'})===0)){
+    roster[teamKey]=[...names,cleanName].sort((a,b)=>a.localeCompare(b));
+    localStorage.setItem(PLAYER_NAME_ROSTER_KEY,JSON.stringify(roster));
+  }
+}
+async function loadSeasonRoster(){
+  try{
+    const response=await fetch(SEASON_ROSTER_URL,{cache:'no-store'});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const roster=await response.json();
+    if(!roster||!Array.isArray(roster.teams))throw new Error('Invalid roster format');
+    seasonRoster=roster;
+  }catch(error){
+    console.warn('Season roster could not be loaded; local names remain available:',error);
+  }
+  refreshTeamSuggestions();
+  renderAll();
+}
+function refreshTeamSuggestions(){
+  const list=$('#season-team-suggestions');
+  if(!list)return;
+  const current=[state.game?.guest,state.game?.home].map(name=>String(name||'').trim()).filter(Boolean);
+  const names=[...seasonRoster.teams.map(team=>team.name),...current]
+    .map(name=>String(name||'').trim()).filter(Boolean)
+    .filter((name,index,all)=>all.findIndex(candidate=>candidate.localeCompare(name,undefined,{sensitivity:'accent'})===0)===index)
+    .sort((a,b)=>a.localeCompare(b));
+  list.replaceChildren(...names.map(name=>{const option=document.createElement('option');option.value=name;return option;}));
+  $$('.team-picker').forEach(select=>{
+    const selected=state.game?.[select.dataset.teamPicker]||'';
+    select.replaceChildren(new Option('팀 선택', ''), ...names.map(name=>new Option(name,name)));
+    select.value=names.includes(selected)?selected:'';
+  });
+}
+function playerNameSuggestions(teamName){
+  const teamKey=normalizeTeamName(teamName);
+  const saved=loadPlayerNameRoster()[teamKey];
+  const current=(state.teams?.[state.activeSide]?.slots||[]).flatMap(slot=>(slot.players||[]).map(player=>player.name));
+  const imported=seasonRoster.teams
+    .filter(team=>normalizeTeamName(team.name)===teamKey)
+    .flatMap(team=>(Array.isArray(team.players)?team.players:[]).map(player=>player.name));
+  return [...new Set([...(Array.isArray(saved)?saved:[]),...imported,...current].map(name=>String(name||'').trim()).filter(Boolean))]
+    .sort((a,b)=>a.localeCompare(b));
+}
+function refreshPlayerNameSuggestions(){
+  const teamName=state.game?.[state.activeSide]||'';
+  const names=playerNameSuggestions(teamName);
+  $$('.player-name-control input[list]').forEach(input=>{
+    const list=document.getElementById(input.getAttribute('list'));
+    if(!list)return;
+    list.replaceChildren(...names.map(name=>{const option=document.createElement('option');option.value=name;return option;}));
+  });
+}
 function downloadJson(){const payload={schemaVersion:'6.1',ruleProfile:RULE_PROFILE,game:state.game,lineScore:state.lineScore,teams:state.teams,slots:state.slots,pitchers:state.pitchers,catchers:state.catchers,events:[...(state.events||[])].sort((a,b)=>(Number(a.sequence)||0)-(Number(b.sequence)||0))};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`BB_Scorekeeper_${state.game.gameNo||state.game.date||'game'}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);}
 function pushHistory(){undoStack.push(deep(state));if(undoStack.length>100)undoStack.shift();redoStack=[];updateUndo();}
 function undo(){if(!undoStack.length)return;redoStack.push(deep(state));state=undoStack.pop();save();renderAll();updateUndo();}
@@ -24,7 +96,8 @@ function redo(){if(!redoStack.length)return;undoStack.push(deep(state));state=re
 function updateUndo(){$('#undoBtn').disabled=!undoStack.length;$('#redoBtn').disabled=!redoStack.length;}
 function getPath(obj,path){return path.split('.').reduce((o,k)=>o?.[k],obj)}
 function setPath(obj,path,value){const parts=path.split('.');const last=parts.pop();const target=parts.reduce((o,k)=>o[k],obj);target[last]=value;}
-function bindPathInputs(root=document){root.querySelectorAll('[data-path]').forEach(el=>{const path=el.dataset.path;const value=getPath(state,path);if(el.type==='checkbox')el.checked=!!value;else el.value=value??'';el.onchange=()=>{pushHistory();const v=el.type==='checkbox'?el.checked:el.value;setPath(state,path,v);if((path==='teamPitcher'||path==='comments')&&state.teams?.[state.activeSide])state.teams[state.activeSide][path]=v;save();};});}
+function bindPathInputs(root=document){root.querySelectorAll('[data-path]').forEach(el=>{const path=el.dataset.path;const value=getPath(state,path);if(el.type==='checkbox')el.checked=!!value;else el.value=value??'';el.onchange=()=>{pushHistory();const v=el.type==='checkbox'?el.checked:el.value;setPath(state,path,v);if((path==='teamPitcher'||path==='comments')&&state.teams?.[state.activeSide])state.teams[state.activeSide][path]=v;if(path===`game.${state.activeSide}`)refreshPlayerNameSuggestions();if(path==='game.guest'||path==='game.home'){refreshTeamSuggestions();refreshPlayerNameSuggestions();}save();};});}
+$$('.team-picker').forEach(select=>select.onchange=()=>{const path=`game.${select.dataset.teamPicker}`;const input=document.querySelector(`[data-path="${path}"]`);if(!input)return;pushHistory();setPath(state,path,select.value);input.value=select.value;refreshTeamSuggestions();refreshPlayerNameSuggestions();save();});
 function renderLineScore(){['guest','home'].forEach(team=>{const holder=$(`#${team}LineScore`);holder.innerHTML='';const row=document.createElement('div');row.className='line-score-row';state.lineScore[team].forEach((v,i)=>{const input=document.createElement('input');input.value=v;input.setAttribute('aria-label',`${team} line score ${i+1}`);input.onchange=()=>{pushHistory();state.lineScore[team][i]=input.value;save();};row.appendChild(input);});holder.appendChild(row);});}
 function makeInput(value,onchange,cls='',field=''){const input=document.createElement('input');input.value=value??'';if(cls)input.className=cls;if(field)input.dataset.field=field;input.onchange=()=>{pushHistory();onchange(input.value);save();};return input;}
 const POSITION_OPTIONS=[['',''],['1','1 · P'],['2','2 · C'],['3','3 · 1B'],['4','4 · 2B'],['5','5 · 3B'],['6','6 · SS'],['7','7 · LF'],['8','8 · CF'],['9','9 · RF'],['DH','DH']];
@@ -37,7 +110,14 @@ function makePositionSelect(value,onchange,field){
 
 function makePlayerNameControl(slotIndex,playerIndex,player){
   const wrap=document.createElement('div');wrap.className='player-name-control';
-  const input=makeInput(player.name,v=>player.name=v,'','name');wrap.appendChild(input);
+  const listId=`player-name-suggestions-${state.activeSide}`;
+  let list=document.getElementById(listId);
+  if(!list){list=document.createElement('datalist');list.id=listId;document.body.appendChild(list);}
+  const input=makeInput(player.name,v=>{player.name=v;savePlayerName(state.game?.[state.activeSide],v);refreshPlayerNameSuggestions();},'','name');
+  input.setAttribute('list',listId);
+  input.placeholder='선수 이름 입력 또는 선택';
+  input.title='등록된 이름을 선택하거나 새 이름을 직접 입력할 수 있습니다.';
+  wrap.appendChild(input);
   if(playerIndex>0){const del=document.createElement('button');del.type='button';del.className='mini-delete';del.textContent='×';del.title='Ersatzspieler löschen';del.onclick=e=>{e.stopPropagation();const linked=state.slots[slotIndex].plateAppearances.some(pa=>pa&&Number(pa.playerIndex)===playerIndex);if(linked){alert('Diesem Spieler sind Plate Appearances zugeordnet. Ändern oder löschen Sie diese zuerst.');return;}pushHistory();ScorekeeperCore.removePlayer(state,slotIndex,playerIndex);save();renderMain();};wrap.appendChild(del);}
   return wrap;
 }
@@ -45,6 +125,8 @@ function makePlayerNameControl(slotIndex,playerIndex,player){
 function renderMain(){
   const derived=ScorekeeperCore.calculateBatterStats(state);
   const body=$('#mainScoreBody');body.innerHTML='';
+  const listId=`player-name-suggestions-${state.activeSide}`;
+  document.getElementById(listId)?.remove();
   const columnCount=Math.max(10,Math.min(PA_COLUMNS,Number(state.game.scoreColumns)||10));
   const header=$('#mainScoreTable thead tr');
   header.querySelectorAll('.inning-head').forEach(cell=>cell.remove());
@@ -68,6 +150,7 @@ function renderMain(){
     });
   }
   const foot=$('#mainScoreFoot');foot.innerHTML='';const tr=document.createElement('tr');const th=document.createElement('th');th.colSpan=13+columnCount;th.textContent='Gesamt';tr.appendChild(th);BATTER_STATS.forEach(stat=>{const td=document.createElement('td');const total=sumDerivedStat(derived,stat);td.textContent=total?String(total):'';tr.appendChild(td)});foot.appendChild(tr);
+  refreshPlayerNameSuggestions();
 }
 function sumDerivedStat(derived,stat){let n=0;derived.forEach(slot=>slot.forEach(line=>{n+=Number(line?.[stat])||0;}));return n;}
 function existingPaIndexForInning(slot,inning){
@@ -259,7 +342,7 @@ function confirmQuickHit(direction,x,y){if(!pendingQuickResult)return;const resu
 function renderQuickScoring(){const gs=ScorekeeperCore.nextPlateAppearanceState(state,state.activeSide);const name=currentBatterLabel(gs);const count=state.game.currentAtBat||{balls:0,strikes:0};const defensiveSide=state.activeSide==='home'?'guest':'home';const select=$('#currentPitcherSelect');select.innerHTML='';(state.teams?.[defensiveSide]?.pitchers||state.pitchers).forEach((p,i)=>{const option=document.createElement('option');option.value=String(i);option.textContent=p.name||p.number||`Pitcher ${i+1}`;select.appendChild(option);});select.value=String(state.game.currentPitcherIndex||0);$('#quickScoringState').textContent=`Inning ${gs.inning??1} · ${name} · ${gs.outs} Aus`;$('#quickBalls').textContent=String(count.balls||0);$('#quickStrikes').textContent=String(count.strikes||0);$('#quickHitDirection').value=count.hitDirection||'';renderQuickDirection();$('#quickScoringPanel').classList.toggle('disabled',gs.inningComplete);}
 function saveCurrentPitcher(){state.game.currentPitcherIndex=Number($('#currentPitcherSelect').value)||0;save();renderPitchers();}
 
-function renderAll(){$$('[data-team-side]').forEach(button=>button.classList.toggle('active',button.dataset.teamSide===state.activeSide));renderLineScore();renderMain();renderPitchers();renderCatchers();bindPathInputs();renderGameState();renderQuickScoring();renderEventLog();$('#ruleProfileBadge').textContent=`Regelprofil: ${RULE_PROFILE.label} · Game State + Auto Batting Stats`;}
+function renderAll(){$$('[data-team-side]').forEach(button=>button.classList.toggle('active',button.dataset.teamSide===state.activeSide));refreshTeamSuggestions();renderLineScore();renderMain();renderPitchers();renderCatchers();bindPathInputs();renderGameState();renderQuickScoring();renderEventLog();$('#ruleProfileBadge').textContent=`Regelprofil: ${RULE_PROFILE.label} · Game State + Auto Batting Stats`;}
 function finishGame(){
   const reason=state.game.endReason||'completed';
   state.game.status='finished';
@@ -304,7 +387,7 @@ $('#pitchForm').addEventListener('submit',savePitchEvent);$('#pitchReason').addE
 $('#resultSelect').addEventListener('change',onResultChange);$('#rbiInput').addEventListener('input',()=>{rbiManualTouched=true;updateRbiRecommendation(false);});$('#rbiAutoBtn').addEventListener('click',()=>{rbiManualTouched=false;updateRbiRecommendation(true);});$('#deleteEntryBtn').addEventListener('click',deleteEntry);$('#cancelEntryBtn').addEventListener('click',()=>{$('#entryDialog').close();activeCell=null;});$('#dialogCloseBtn').addEventListener('click',()=>{$('#entryDialog').close();activeCell=null;});$('#undoBtn').addEventListener('click',undo);$('#redoBtn').addEventListener('click',redo);$('#zoomOutBtn').addEventListener('click',()=>setZoom(zoom-.05));$('#zoomInBtn').addEventListener('click',()=>setZoom(zoom+.05));$('#addPitcherBtn').addEventListener('click',()=>{pushHistory();const defensiveSide=state.activeSide==='home'?'guest':'home';ScorekeeperCore.addPitcher(state,defensiveSide);save();renderPitchers();});$('#resetBtn').addEventListener('click',()=>{if(!confirm('Alle Eingaben des aktuellen Scoresheets löschen?'))return;pushHistory();state=defaultState();save();renderAll();});
 $('#addInningSheetBtn').addEventListener('click',()=>{const current=Math.max(10,Number(state.game.scoreColumns)||10);if(current>=PA_COLUMNS){alert(`Maximal ${PA_COLUMNS} Innings können hinzugefügt werden.`);return;}pushHistory();state.game.scoreColumns=Math.min(PA_COLUMNS,current+10);save();renderAll();});
 $('#finishGameBtn').addEventListener('click',()=>{const reason=state.game.endReason||'completed';if(!confirm(`Spiel mit dem Grund „${reason}“ beenden?`))return;pushHistory();finishGame();});
-renderAll();updateUndo();setZoom(1);
+renderAll();updateUndo();setZoom(1);loadSeasonRoster();
 window.BBFirebaseSync?.startPresence();
 window.BBFirebaseSync?.subscribe(remoteState=>{
   const activeSide=state.activeSide;

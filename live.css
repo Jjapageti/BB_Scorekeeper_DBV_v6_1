@@ -3,6 +3,7 @@
 .score-hero{grid-template-columns:minmax(0,1fr) minmax(150px,190px) minmax(0,1fr);overflow:hidden}
 .team{min-width:0;position:relative;z-index:1}
 .team strong{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.team-logo{width:clamp(42px,5vw,62px);height:clamp(42px,5vw,62px);object-fit:contain;vertical-align:middle;margin:0 8px;padding:4px;border:1px solid #29404e;border-radius:10px;background:#10232d;filter:brightness(.82) saturate(.92) drop-shadow(0 2px 4px rgba(0,0,0,.28))}
 .game-center{position:relative;z-index:2;min-width:0;padding:0 4px}
 .inning{max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .base{width:132px}

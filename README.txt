@@ -29,9 +29,16 @@ v6.1 추가:
 - Quick Scoring 패널에서 타석 결과를 빠르게 입력 가능
 - 빠른 입력이 주자 이동을 필요로 하면 자동으로 상세 입력창을 열어 보완 가능
 - Firebase Realtime Database 주소와 공개 테스트 규칙 설정이 필요
+- 2026 시즌 로스터는 BB_Baseball_Stats_DE의 데이터 동기화 후 자동 생성되어 선수 이름 자동완성에 사용
 
 현재 제한:
 - 아직 한 팀 Scoresheet 기반이라 완전한 Home/Away 양쪽 Game State는 아님
 - 영상 Live 없음
 - 온라인 서버/WebSocket 없음 (같은 브라우저의 localhost용 prototype)
 - 투수 현재 상태는 아직 자동 추적하지 않음
+
+선수 이름 자동완성:
+  BB_Baseball_Stats_DE에서 `sync_data.py`를 실행하면 이 폴더의
+  `data/rosters-2026.json`이 갱신됩니다. Scorekeeper를 다시 열면
+  팀 이름에 맞는 2026 시즌 선수 이름이 스코어시트 입력창에 추천됩니다.
+  목록에 없는 신규 선수는 기존처럼 직접 입력할 수 있습니다.
